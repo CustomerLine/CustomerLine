@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DataLab — Tips usage</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Mulish, sans-serif;background:#F3F4F6;color:#222;line-height:1.6}
+a{color:#348888;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+.nav{background:#0F2072;padding:0 32px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.nav-logo{color:#fff;font-size:18px;font-weight:800;letter-spacing:-.3px;padding:16px 24px 16px 0;border-right:1px solid rgba(255,255,255,.2);margin-right:8px}
+.nav-logo span{color:#22BABB}
+.nav a{color:rgba(255,255,255,.8);font-size:13px;font-weight:600;padding:18px 16px;display:block;border-bottom:3px solid transparent;transition:all .2s}
+.nav a:hover,.nav a.active{color:#fff;border-bottom-color:#22BABB;text-decoration:none}
+
+/* HERO */
+.hero{background:#0F2072;padding:20px 32px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:#22BABB;opacity:.07;border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;background:#348888;opacity:.06;border-radius:50%}
+.hero h1{font-size:36px;font-weight:800;color:#fff;margin-bottom:12px;position:relative}
+.hero h1 span{color:#22BABB}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:640px;margin:0 auto;position:relative}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+
+/* CONTAINERS */
+.container{max-width:1100px;margin:0 auto;padding:0 32px}
+.section{padding:48px 0}
+.section-title{font-size:22px;font-weight:800;color:#0F2072;margin-bottom:8px}
+.section-sub{font-size:14px;color:#666;margin-bottom:32px}
+.divider{height:3px;width:48px;background:#348888;border-radius:2px;margin-bottom:32px}
+
+/* CARDS */
+.card{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:24px;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.card-grid{display:grid;gap:20px}
+.card-grid-2{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.card-grid-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+
+/* BADGE */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.badge-diffusion{background:#E1F5EE;color:#0F6E56}
+.badge-analyse{background:#E6F1FB;color:#0C447C}
+.badge-marketing{background:#FAEEDA;color:#633806}
+
+/* TIP SECTION */
+.tip-section{scroll-margin-top:140px;padding:40px 0;border-bottom:1px solid #e8e8e8}
+.tip-section:last-child{border-bottom:none}
+.tip-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.tip-num{width:32px;height:32px;border-radius:50%;background:#0F2072;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-title{font-size:18px;font-weight:700;color:#0F2072}
+.tip-desc{font-size:14px;color:#555;margin-bottom:20px;line-height:1.7}
+.tip-img{margin:16px 0;border-radius:10px;overflow:hidden}
+.tip-note{background:#F0F7FF;border-left:3px solid #348888;border-radius:0 8px 8px 0;padding:10px 16px;font-size:13px;color:#0C447C;margin-top:12px}
+
+/* ANCHOR NAV */
+.anchor-nav{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:40px;position:sticky;top:70px}
+.anchor-nav-title{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.anchor-nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.anchor-nav a{font-size:12px;font-weight:600;color:#0F2072;background:#F3F4F6;padding:5px 12px;border-radius:20px;border:1px solid #ddd;transition:all .2s}
+.anchor-nav a:hover{background:#0F2072;color:#fff;text-decoration:none;border-color:#0F2072}
+
+/* FOOTER */
+.footer{background:#0F2072;color:rgba(255,255,255,.7);text-align:center;padding:24px;font-size:12px;margin-top:0}
+.footer a{color:#22BABB}
+
+/* PILIER CARD */
+.pilier{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px;text-align:center}
+.pilier-icon{font-size:28px;margin-bottom:10px}
+.pilier-title{font-size:14px;font-weight:700;color:#0F2072;margin-bottom:6px}
+.pilier-desc{font-size:12px;color:#666;line-height:1.5}
+
+/* STAT */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}
+.stat-card{background:#0F2072;color:#fff;border-radius:12px;padding:24px;text-align:center}
+.stat-val{font-size:32px;font-weight:800;color:#22BABB}
+.stat-label{font-size:12px;opacity:.8;margin-top:4px}
+
+/* SCREEN LABEL */
+.screen-caption{font-size:11px;color:#888;text-align:center;margin-top:6px;font-style:italic}
+</style>
+
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">Data<span>Lab</span></div>
+  <a href="index.html">DataLab</a><a href="sommaire.html">Les écrans</a><a href="navigation.html">Navigation</a><a href="tips.html" class="active">Tips usage</a>
+</nav>
+<div class="hero" style="padding:20px 32px">
+  <div class="hero-tag">Fonctionnalités Qlik</div>
+  <h1>Tips <span>usage</span></h1>
+  <p>Maîtrisez les fonctionnalités clés pour tirer le meilleur parti de DataLab.</p>
+</div>
+<div class="container">
+
+  <div class="anchor-nav">
+    <div class="anchor-nav-title">Aller directement à</div>
+    <ul>
+      <li><a href="#export">Export tableau</a></li>
+      <li><a href="#cycle">Cycle temporel</a></li>
+      <li><a href="#cycle-filtre">Cycle de filtre</a></li>
+      <li><a href="#hierarchie">Dimensions & hiérarchie</a></li>
+      <li><a href="#bouton-radio">Boutons radio</a></li>
+    </ul>
+  </div>
+
+  <!-- Export -->
+  <div class="tip-section" id="export">
+    <div class="tip-header">
+      <div class="tip-num">📥</div>
+      <div class="tip-title">Exporter un tableau</div>
+    </div>
+    <div class="tip-desc">Les tableaux de données peuvent être exportés en Excel (.xlsx). Faites un <strong>clic droit</strong> sur le tableau souhaité pour afficher le menu d'action, puis cliquez sur "Télécharger" et choisissez le format Données.</div>
+     <div class="tip-img"><img src="gif/export.gif" style="width:100%;border-radius:8px;border:1px solid #e0e0e0;" alt="export.gif"/></div>
+    <div class="tip-note">💡 Seuls les tableaux sont exportables en XLS. Les graphiques s'exportent en image (ou PDF). Le nom du fichier reprend le titre du visuel.</div>
+  </div>
+
+  <!-- Cycle temporel -->
+  <div class="tip-section" id="cycle">
+    <div class="tip-header">
+      <div class="tip-num">📅</div>
+      <div class="tip-title">Changer le niveau temporel (cycle de graphique)</div>
+    </div>
+    <div class="tip-desc">En bas de certains graphiques, un sélecteur de granularité temporelle permet de choisir le niveau d'affichage : <strong>Année</strong>, <strong>Mois</strong>, <strong>Date</strong>, <strong>Numéro de parution</strong>… Cliquez sur la valeur affichée pour basculer vers le niveau suivant ou précédent. Utile pour passer d'une vision annuelle à une vision mensuelle ou parution par parution.</div>
+    <div class="tip-img"><img src="gif/cycle_temporel.gif" style="width:100%;border-radius:8px;border:1px solid #e0e0e0;" alt="cycle_temporel.gif"/></div>
+    <div class="tip-note">💡 La granularité choisie s'applique uniquement au graphique concerné, pas à toute la page.</div>
+  </div>
+
+  <!-- Cycle filtre -->
+  <div class="tip-section" id="cycle-filtre">
+    <div class="tip-header">
+      <div class="tip-num">🔄</div>
+      <div class="tip-title">Cycle de filtre — changer de niveau en un clic</div>
+    </div>
+    <div class="tip-desc">Certains filtres disposent également d'un mécanisme de cycle. En cliquant sur la valeur du filtre, vous passez au niveau suivant (ex. : de "Mois" à "Trimestre" à "Année").</div>
+    <div class="tip-img"><img src="gif/filtre_cycle.gif" style="width:100%;border-radius:8px;border:1px solid #e0e0e0;" alt="filtre_cycle.gif"/></div>
+  </div>
+
+  <!-- Hiérarchie / dimensions -->
+  <div class="tip-section" id="hierarchie">
+    <div class="tip-header">
+      <div class="tip-num">🔽</div>
+      <div class="tip-title">Dimensions & niveaux de hiérarchie</div>
+    </div>
+    <div class="tip-desc">Certains graphiques permettent de "descendre" dans la hiérarchie des données en cliquant sur un élément. Par exemple, cliquer sur une durée regroupée permet d'afficher le détail par durée. Ce mécanisme de drill-down est indiqué par une icône de hiérarchie dans le coin du visuel. Pour remonter d'un niveau, utilisez le bouton de retour qui apparaît.</div>
+    <div class="tip-img"><img src="gif/hierarchie.gif" style="width:100%;border-radius:8px;border:1px solid #e0e0e0;" alt="hierarchie.gif"/></div>
+    <div class="tip-note">💡 Les niveaux de hiérarchie disponibles sont documentés dans l'aide contextuelle de chaque écran (bouton i).</div>
+  </div>
+
+  <!-- Bouton radio -->
+  <div class="tip-section" id="bouton-radio">
+    <div class="tip-header">
+      <div class="tip-num">⭕</div>
+      <div class="tip-title">Boutons radio — changer la vue d'un graphique</div>
+    </div>
+    <div class="tip-desc">Certains graphiques proposent plusieurs modes de visualisation accessibles via des boutons radio (petits cercles en haut du graphique). Par exemple sur l'écran Réabonnement, vous pouvez passer du <strong>taux de réabonnement total</strong> au <strong>taux de réabonnement par fidélité</strong> d'un simple clic. Les données restent les mêmes, seul l'angle d'analyse change.</div>
+    <div class="tip-img"><img src="gif/bouton_radio.gif" style="width:100%;border-radius:8px;border:1px solid #e0e0e0;" alt="bouton_radio.gif"/></div>
+  </div>
+
+</div>
+<footer class="footer">DataLab par <strong style="color:#fff">CustomerLine</strong> &nbsp;·&nbsp; <a href="mailto:support_datalab@customerline.fr">support_datalab@customerline.fr</a></footer>
+</body></html>

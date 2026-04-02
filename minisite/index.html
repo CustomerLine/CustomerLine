@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DataLab — Accueil</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Mulish, sans-serif;background:#F3F4F6;color:#222;line-height:1.6}
+a{color:#348888;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAV */
+.nav{background:#0F2072;padding:0 32px;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.nav-logo{color:#fff;font-size:18px;font-weight:800;letter-spacing:-.3px;padding:16px 24px 16px 0;border-right:1px solid rgba(255,255,255,.2);margin-right:8px}
+.nav-logo span{color:#22BABB}
+.nav a{color:rgba(255,255,255,.8);font-size:13px;font-weight:600;padding:18px 16px;display:block;border-bottom:3px solid transparent;transition:all .2s}
+.nav a:hover,.nav a.active{color:#fff;border-bottom-color:#22BABB;text-decoration:none}
+
+/* HERO */
+.hero{background:#0F2072;padding:20px 32px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;background:#22BABB;opacity:.07;border-radius:50%}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;background:#348888;opacity:.06;border-radius:50%}
+.hero h1{font-size:36px;font-weight:800;color:#fff;margin-bottom:12px;position:relative}
+.hero h1 span{color:#22BABB}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:640px;margin:0 auto;position:relative}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.12);color:#fff;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+
+/* CONTAINERS */
+.container{max-width:1100px;margin:0 auto;padding:0 32px}
+.section{padding:48px 0}
+.section-title{font-size:22px;font-weight:800;color:#0F2072;margin-bottom:8px}
+.section-sub{font-size:14px;color:#666;margin-bottom:32px}
+.divider{height:3px;width:48px;background:#348888;border-radius:2px;margin-bottom:32px}
+
+/* CARDS */
+.card{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:24px;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.card-grid{display:grid;gap:20px}
+.card-grid-2{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.card-grid-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+
+/* BADGE */
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.badge-diffusion{background:#E1F5EE;color:#0F6E56}
+.badge-analyse{background:#E6F1FB;color:#0C447C}
+.badge-marketing{background:#FAEEDA;color:#633806}
+
+/* TIP SECTION */
+.tip-section{scroll-margin-top:140px;padding:40px 0;border-bottom:1px solid #e8e8e8}
+.tip-section:last-child{border-bottom:none}
+.tip-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.tip-num{width:32px;height:32px;border-radius:50%;background:#0F2072;color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.tip-title{font-size:18px;font-weight:700;color:#0F2072}
+.tip-desc{font-size:14px;color:#555;margin-bottom:20px;line-height:1.7}
+.tip-img{margin:16px 0;border-radius:10px;overflow:hidden}
+.tip-note{background:#F0F7FF;border-left:3px solid #348888;border-radius:0 8px 8px 0;padding:10px 16px;font-size:13px;color:#0C447C;margin-top:12px}
+
+/* ANCHOR NAV */
+.anchor-nav{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px 24px;margin-bottom:40px;position:sticky;top:70px}
+.anchor-nav-title{font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.anchor-nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.anchor-nav a{font-size:12px;font-weight:600;color:#0F2072;background:#F3F4F6;padding:5px 12px;border-radius:20px;border:1px solid #ddd;transition:all .2s}
+.anchor-nav a:hover{background:#0F2072;color:#fff;text-decoration:none;border-color:#0F2072}
+
+/* FOOTER */
+.footer{background:#0F2072;color:rgba(255,255,255,.7);text-align:center;padding:24px;font-size:12px;margin-top:0}
+.footer a{color:#22BABB}
+
+/* PILIER CARD */
+.pilier{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:20px;text-align:center}
+.pilier-icon{font-size:28px;margin-bottom:10px}
+.pilier-title{font-size:14px;font-weight:700;color:#0F2072;margin-bottom:6px}
+.pilier-desc{font-size:12px;color:#666;line-height:1.5}
+
+/* STAT */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}
+.stat-card{background:#0F2072;color:#fff;border-radius:12px;padding:24px;text-align:center}
+.stat-val{font-size:32px;font-weight:800;color:#22BABB}
+.stat-label{font-size:12px;opacity:.8;margin-top:4px}
+
+/* SCREEN LABEL */
+.screen-caption{font-size:11px;color:#888;text-align:center;margin-top:6px;font-style:italic}
+</style>
+
+<style>
+.benefit-card{background:#fff;border-radius:12px;border:1px solid #e8e8e8;padding:28px;border-top:4px solid #348888}
+.benefit-icon{font-size:24px;margin-bottom:12px}
+.benefit-title{font-size:15px;font-weight:700;color:#0F2072;margin-bottom:8px}
+.benefit-desc{font-size:13px;color:#555;line-height:1.6}
+.niveau-card{background:#fff;border-radius:12px;padding:28px;text-align:center;border:1px solid #e8e8e8}
+.niveau-bar{height:4px;border-radius:2px;margin-bottom:20px}
+.niveau-title{font-size:16px;font-weight:800;margin-bottom:8px}
+.niveau-sub{font-size:12px;font-weight:600;opacity:.7;margin-bottom:12px}
+.niveau-desc{font-size:13px;color:#555;line-height:1.5}
+.quote-block{background:#0F2072;color:#fff;border-radius:16px;padding:36px;text-align:center;margin:48px 0}
+.quote-block blockquote{font-size:20px;font-weight:700;font-style:italic;color:#22BABB;margin-bottom:12px}
+.quote-block p{font-size:14px;opacity:.8}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">Data<span>Lab</span></div>
+  <a href="index.html" class="active">DataLab</a><a href="sommaire.html">Les écrans</a><a href="navigation.html">Navigation</a><a href="tips.html">Tips usage</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">CustomerLine — Solution DataLab</div>
+  <h1>L'IA au service de vos <span>leviers de croissance</span></h1>
+  <p>DataLab alerte sur les opportunités, automatise la datavisualisation et transforme chaque insight en action concrète.</p>
+</div>
+
+<div class="container">
+
+  <!-- Promesse -->
+  <div class="section">
+    <div class="section-title">Du reporting passif au pilotage actif</div>
+    <div class="divider"></div>
+    <div class="card-grid card-grid-3">
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <div class="benefit-title">Faire autant avec moins</div>
+        <div class="benefit-desc">Automatisation, standardisation, gain de temps humain. Des reportings standards disponibles sans intervention manuelle.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎯</div>
+        <div class="benefit-title">Faire plus pour aller plus loin</div>
+        <div class="benefit-desc">Alertes, segmentation, leviers de croissance. Identifiez les opportunités avant qu'il soit trop tard.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📊</div>
+        <div class="benefit-title">Piloter plutôt qu'analyser</div>
+        <div class="benefit-desc">La donnée au service de la décision. Moins d'effort, plus de valeur, plus vite.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 niveaux -->
+  <div class="section" style="border-top:1px solid #e8e8e8">
+    <div class="section-title">Trois niveaux d'analyse</div>
+    <div class="section-sub">Pour répondre à toutes vos questions</div>
+    <div class="divider"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(3,1fr);gap:20px">
+      <div class="niveau-card">
+        <div class="niveau-bar" style="background:#5DB476"></div>
+        <div class="niveau-title" style="color:#0F6E56">Diffusion</div>
+        <div class="niveau-sub" style="color:#0F6E56">Exemplaires</div>
+        <div class="niveau-desc">Suivre, monitorer & comprendre les résultats, l'évolution des tirages par parution, collecteur, mode de règlement.</div>
+      </div>
+      <div class="niveau-card">
+        <div class="niveau-bar" style="background:#22BABB"></div>
+        <div class="niveau-title" style="color:#0F2072">Analyse</div>
+        <div class="niveau-sub" style="color:#348888">Abonnements</div>
+        <div class="niveau-desc">Analyser l'évolution des abonnements & la composition du portefeuille. Entrées/sorties, réabonnement, attrition ...</div>
+      </div>
+      <div class="niveau-card">
+        <div class="niveau-bar" style="background:#EF9F27"></div>
+        <div class="niveau-title" style="color:#633806">Marketing</div>
+        <div class="niveau-sub" style="color:#854F0B">Individus</div>
+        <div class="niveau-desc">Monitorer votre base clients pour définir & créer des stratégies marketing pertinentes. Segmentation, photo de base, leviers.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Piliers -->
+  <div class="section" style="border-top:1px solid #e8e8e8">
+    <div class="section-title">Les piliers de DataLab</div>
+    <div class="divider"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="pilier"><div class="pilier-icon">🗄️</div><div class="pilier-title">Données</div><div class="pilier-desc">Collecte et stockage automatique de vos données de gestion</div></div>
+      <div class="pilier"><div class="pilier-icon">📈</div><div class="pilier-title">Reporting</div><div class="pilier-desc">Rapports détaillés et synthétiques — suivi production & marketing</div></div>
+      <div class="pilier"><div class="pilier-icon">🔍</div><div class="pilier-title">Analyse</div><div class="pilier-desc">Analyser, fouiller, comprendre — de la synthèse au détail</div></div>
+      <div class="pilier"><div class="pilier-icon">🔔</div><div class="pilier-title">Alerting</div><div class="pilier-desc">Identification automatique de valeurs anormales pour agir</div></div>
+      <div class="pilier"><div class="pilier-icon">📚</div><div class="pilier-title">Connaissance</div><div class="pilier-desc">Glossaire, calendrier des événements — une base mutualisée</div></div>      
+      <div class="pilier"><div class="pilier-icon">🧠</div><div class="pilier-title">IA</div><div class="pilier-desc">Pour prédire & vous accompagner dans l'usage en langage naturel</div></div>
+    </div>
+  </div>
+
+  
+  <!-- Liens rapides -->
+  <div class="section">
+    <div class="section-title">Par où commencer ?</div>
+    <div class="divider"></div>
+    <div class="card-grid card-grid-3">
+      <a href="sommaire.html" style="display:block;text-decoration:none">
+        <div class="card" style="border-top:3px solid #0F2072;cursor:pointer">
+          <div style="font-size:20px;margin-bottom:10px">🗂️</div>
+          <div style="font-size:15px;font-weight:700;color:#0F2072;margin-bottom:6px">Les écrans</div>
+          <div style="font-size:13px;color:#666">Découvrez les modules disponibles</div>
+        </div>
+      </a>
+      <a href="navigation.html" style="display:block;text-decoration:none">
+        <div class="card" style="border-top:3px solid #348888;cursor:pointer">
+          <div style="font-size:20px;margin-bottom:10px">🧭</div>
+          <div style="font-size:15px;font-weight:700;color:#0F2072;margin-bottom:6px">Navigation & filtres</div>
+          <div style="font-size:13px;color:#666">Comprendre l'interface et l'usage des filtres</div>
+        </div>
+      </a>
+      <a href="tips.html" style="display:block;text-decoration:none">
+        <div class="card" style="border-top:3px solid #EF9F27;cursor:pointer">
+          <div style="font-size:20px;margin-bottom:10px">💡</div>
+          <div style="font-size:15px;font-weight:700;color:#0F2072;margin-bottom:6px">Tips usage</div>
+          <div style="font-size:13px;color:#666">Maîtriser les fonctionnalités clés</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Citation -->
+   <div class="quote-block">
+     <blockquote>« Moins d'effort, plus de valeur, plus vite. »</blockquote>
+      <p>Un outil marketing actionnable — automatiser, simplifier & libérer du temps pour vous aider face à vos enjeux.</p>
+   </div>
+
+</div>
+<footer class="footer">DataLab par <strong style="color:#fff">CustomerLine</strong> &nbsp;·&nbsp; <a href="mailto:support_datalab@customerline.fr">support_datalab@customerline.fr</a></footer>
+</body></html>
