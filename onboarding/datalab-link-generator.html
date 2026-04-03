@@ -80,7 +80,7 @@
     }
 
     error.classList.add('hidden');
-    const url = BASE + '?tenant=' + encodeURIComponent(raw);
+    const url = BASE + '?tenant=' + encodeURIComponent(decodeURIComponent(raw));
     document.getElementById('result-url').value = url;
     result.classList.remove('hidden');
     document.getElementById('copy-confirm').classList.add('hidden');
