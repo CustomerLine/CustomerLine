@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EdiisPay Veille Paiement — Édition #12 · 8 avril 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #F2EDE6;
+  font-family: 'DM Sans', sans-serif;
+  color: #1A1814;
+  -webkit-font-smoothing: antialiased;
+}
+
+.email-wrap {
+  max-width: 680px;
+  margin: 40px auto;
+  background: #FAFAF8;
+  border: 1px solid #DDD8D0;
+}
+
+/* ─── MASTHEAD ─── */
+.masthead {
+  background: #0F1923;
+  padding: 36px 48px 28px;
+  border-bottom: 3px solid #C8A96E;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(200,169,110,0.07);
+}
+.masthead-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.logo-group { display: flex; align-items: center; gap: 12px; }
+.logo-mark {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, #C8A96E, #E0C48C);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 900; color: #0F1923;
+  flex-shrink: 0;
+}
+.logo-text { color: #F5F0E8; }
+.logo-name { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; }
+.logo-sub { font-size: 11px; color: #8A8070; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; }
+.edition-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #8A8070;
+  border: 1px solid #2E3A44;
+  padding: 4px 10px; border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+.masthead-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 34px; font-weight: 900;
+  color: #F5F0E8;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+.masthead-title span { color: #C8A96E; }
+.masthead-date {
+  font-size: 12px; color: #8A8070;
+  display: flex; align-items: center; gap: 16px;
+}
+.masthead-date::before {
+  content: '';
+  display: inline-block;
+  width: 24px; height: 1px;
+  background: #C8A96E;
+  vertical-align: middle;
+}
+
+/* ─── SOMMAIRE ─── */
+.sommaire {
+  background: #0F1923;
+  border-bottom: 3px solid #C8A96E;
+  padding: 0 48px;
+}
+.sommaire-inner {
+  display: flex;
+  gap: 0;
+  border-top: 1px solid #1E2D38;
+}
+.som-item {
+  flex: 1;
+  padding: 14px 0 12px;
+  text-align: center;
+  border-right: 1px solid #1E2D38;
+}
+.som-item:last-child { border-right: none; }
+.som-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: #C8A96E;
+  letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.som-label { font-size: 11px; font-weight: 500; color: #8A8070; line-height: 1.3; }
+
+/* ─── ALERT BAND (2 niveaux) ─── */
+.alert-band {
+  background: #FFF3E0;
+  border-left: 4px solid #E65C00;
+  padding: 14px 48px;
+  display: flex; align-items: flex-start; gap: 12px;
+  border-bottom: 1px solid #F5D5C0;
+}
+.alert-band.alert-critical {
+  background: #FFF0F0;
+  border-left-color: #C0392B;
+  border-bottom-color: #F5C0C0;
+}
+.alert-icon {
+  width: 28px; height: 28px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  margin-top: 1px;
+}
+.alert-icon-orange { background: #E65C00; }
+.alert-icon-red    { background: #C0392B; }
+.alert-text { flex: 1; }
+.alert-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.alert-label-orange { color: #7A2E00; }
+.alert-label-red    { color: #7A0000; }
+.alert-content { font-size: 13px; line-height: 1.5; }
+.alert-content-orange { color: #3A1E0C; }
+.alert-content-red    { color: #3A0C0C; }
+.alert-content strong { font-weight: 600; }
+
+/* ─── BODY ─── */
+.body-wrap { padding: 36px 48px; }
+
+.rubrique { margin-bottom: 36px; }
+.rubrique + .rubrique { border-top: 1px solid #E8E0D0; padding-top: 32px; }
+
+.rubrique-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 18px;
+}
+.rubrique-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.rubrique-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: #8A8070; letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.rubrique-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700; color: #1A1814;
+  letter-spacing: -0.3px; line-height: 1.2;
+}
+
+.article-item {
+  padding: 14px 16px 14px 0;
+  border-bottom: 1px solid #F0EBE2;
+  display: flex; gap: 14px;
+}
+.article-item:last-child { border-bottom: none; }
+.article-bullet {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 6px;
+}
+.article-body { flex: 1; }
+.article-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 5px; }
+.article-title { font-size: 14px; font-weight: 600; color: #1A1814; line-height: 1.3; }
+.article-source {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: #8A8070;
+  white-space: nowrap;
+}
+.article-summary { font-size: 13px; color: #4A4540; line-height: 1.6; margin-bottom: 8px; }
+.article-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.tag {
+  display: inline-flex;
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 3px;
+  letter-spacing: 0.02em;
+}
+.tag-client { background: #EAF3DE; color: #3B6D11; }
+.tag-reg    { background: #E6F1FB; color: #185FA5; }
+.tag-alerte { background: #FAECE7; color: #993C1D; }
+.tag-psp    { background: #EEEDFE; color: #534AB7; }
+.tag-marche { background: #FAEEDA; color: #854F0B; }
+.tag-impact { background: #FFF0F0; color: #A32D2D; font-weight: 600; border: 1px solid #F7C1C1; }
+.tag-critical { background: #C0392B; color: #fff; font-weight: 600; }
+
+/* ─── RADAR PSP ─── */
+.radar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.radar-card {
+  background: #F5F0E8;
+  border: 1px solid #DDD8D0;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.radar-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.radar-logo {
+  width: 30px; height: 30px; border-radius: 6px;
+  background: #0F1923;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: #C8A96E;
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+}
+.radar-psp-name { font-size: 13px; font-weight: 600; color: #1A1814; }
+.radar-status {
+  font-size: 10px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .06em;
+  padding: 2px 7px; border-radius: 3px;
+  margin-left: auto;
+}
+.status-ok     { background: #EAF3DE; color: #3B6D11; }
+.status-watch  { background: #FAEEDA; color: #854F0B; }
+.status-alert  { background: #FAECE7; color: #993C1D; }
+.status-critical { background: #C0392B; color: #fff; }
+.radar-note { font-size: 12px; color: #4A4540; line-height: 1.5; }
+
+/* ─── STAT BAR ─── */
+.stat-bar {
+  background: #0F1923;
+  border-radius: 8px;
+  padding: 20px 24px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-bottom: 18px;
+}
+.stat-item { text-align: center; padding: 0 12px; }
+.stat-item + .stat-item { border-left: 1px solid #1E2D38; }
+.stat-num-big {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 900; color: #C8A96E;
+  line-height: 1;
+}
+.stat-label-sm { font-size: 11px; color: #8A8070; margin-top: 4px; }
+
+/* ─── INSIGHT BLOCK ─── */
+.insight-block {
+  background: #F5F0E8;
+  border: 1px solid #DDD8D0;
+  border-left: 4px solid #0F1923;
+  border-radius: 0 8px 8px 0;
+  padding: 16px 20px;
+  margin: 14px 0 0;
+}
+.insight-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: #8A8070; margin-bottom: 5px;
+}
+.insight-text { font-size: 13px; color: #2A2520; line-height: 1.6; }
+
+/* ─── FOOTER ─── */
+.footer {
+  background: #0F1923;
+  padding: 28px 48px;
+  border-top: 3px solid #C8A96E;
+}
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 20px; }
+.footer-col-title {
+  font-size: 10px; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: #C8A96E; margin-bottom: 8px;
+}
+.footer-list { list-style: none; }
+.footer-list li {
+  font-size: 11px; color: #8A8070; padding: 2px 0;
+  display: flex; align-items: center; gap: 6px;
+}
+.footer-list li::before { content: '—'; color: #2E3A44; }
+.footer-legal {
+  border-top: 1px solid #1E2D38;
+  padding-top: 16px;
+  font-size: 11px; color: #4A5560; line-height: 1.6;
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+}
+.footer-logo { font-family: 'DM Mono', monospace; font-size: 12px; color: #C8A96E; font-weight: 500; }
+.unsubscribe { font-size: 10px; color: #3A4550; text-decoration: underline; cursor: pointer; }
+
+/* Colors per rubrique */
+.r1 .rubrique-icon { background: #E1F5EE; }
+.r2 .rubrique-icon { background: #E6F1FB; }
+.r3 .rubrique-icon { background: #FAECE7; }
+.r4 .rubrique-icon { background: #FAEEDA; }
+.r5 .rubrique-icon { background: #EEEDFE; }
+.r1 .article-bullet { background: #1D9E75; }
+.r2 .article-bullet { background: #185FA5; }
+.r3 .article-bullet { background: #993C1D; }
+.r4 .article-bullet { background: #854F0B; }
+.r5 .article-bullet { background: #534AB7; }
+</style>
+</head>
+<body>
+
+<div class="email-wrap">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="masthead-top">
+      <div class="logo-group">
+        <div class="logo-mark">E</div>
+        <div class="logo-text">
+          <div class="logo-name">EdiisPay</div>
+          <div class="logo-sub">Veille Paiement</div>
+        </div>
+      </div>
+      <div class="edition-badge"># 012 &nbsp;·&nbsp; W15-2026</div>
+    </div>
+    <div class="masthead-title">Le <span>Radar</span><br>Paiement</div>
+    <div class="masthead-date">Mercredi 8 avril 2026 &nbsp;·&nbsp; 5 rubriques &nbsp;·&nbsp; 13 signaux</div>
+  </div>
+
+  <!-- SOMMAIRE -->
+  <div class="sommaire">
+    <div class="sommaire-inner">
+      <div class="som-item"><div class="som-num">01</div><div class="som-label">Signal PSP</div></div>
+      <div class="som-item"><div class="som-num">02</div><div class="som-label">Réglementation</div></div>
+      <div class="som-item"><div class="som-num">03</div><div class="som-label">3DS & Fraude</div></div>
+      <div class="som-item"><div class="som-num">04</div><div class="som-label">Benchmark</div></div>
+      <div class="som-item"><div class="som-num">05</div><div class="som-label">Insight Éditeur</div></div>
+    </div>
+  </div>
+
+  <!-- ALERTE CRITIQUE — FICOBA / SEPA -->
+  <div class="alert-band alert-critical">
+    <div class="alert-icon alert-icon-red">🚨</div>
+    <div class="alert-text">
+      <div class="alert-label alert-label-red">Alerte sécurité critique · Action immédiate recommandée</div>
+      <div class="alert-content alert-content-red">
+        <strong>Piratage FICOBA (19/02/2026) — 1,2 million de RIB/IBAN compromis.</strong>
+        La DGFiP a confirmé une intrusion dans le fichier national des comptes bancaires. Des IBAN de clients potentiellement exposés circulent. Risque direct : émission de faux mandats SEPA. Vérifier avec les clients concernés l'activation du service "liste blanche créanciers" auprès de leurs banques.
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTE RÉGLEMENTAIRE — MOTO deadline -->
+  <div class="alert-band">
+    <div class="alert-icon alert-icon-orange">⚡</div>
+    <div class="alert-text">
+      <div class="alert-label alert-label-orange">Alerte réglementaire · Deadline J−33 — 11 mai 2026</div>
+      <div class="alert-content alert-content-orange">
+        <strong>Observatoire CB — levée des exemptions MOTO sectorielles.</strong>
+        La limite de vélocité sur les paiements MOTO (Mail Order / Telephone Order) passe à <strong>500 € maximum</strong> le 11 mai 2026 pour les derniers secteurs encore exemptés. Impacts à vérifier pour les clients ayant des flux MOTO actifs.
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-wrap">
+
+    <!-- R1 : SIGNAL PSP -->
+    <div class="rubrique r1">
+      <div class="rubrique-header">
+        <div class="rubrique-icon">📡</div>
+        <div class="rubrique-meta">
+          <div class="rubrique-num">Rubrique 01</div>
+          <div class="rubrique-name">Signal PSP</div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <div style="font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #8A8070; margin-bottom: 10px;">Radar PSPs partenaires Ediis Pay — avril 2026</div>
+        <div class="radar-grid">
+          <div class="radar-card">
+            <div class="radar-top">
+              <div class="radar-logo">STR</div>
+              <div class="radar-psp-name">Stripe</div>
+              <div class="radar-status status-watch">WATCH</div>
+            </div>
+            <div class="radar-note">Volume 2025 : $1 900 Mds (+34%). Valorisation $159 Mds. Rumeurs de rachat de PayPal. Forte pression tarifaire attendue en Europe Q3 2026.</div>
+          </div>
+          <div class="radar-card">
+            <div class="radar-top">
+              <div class="radar-logo">WLN</div>
+              <div class="radar-psp-name">Worldline / Ogone</div>
+              <div class="radar-status status-alert">ALERTE</div>
+            </div>
+            <div class="radar-note">Revenue Merchant Services 2025 : −1,4% à 3,2 Mds€. Cession d'actifs en cours. Stabilité des endpoints Ogone à surveiller de près.</div>
+          </div>
+          <div class="radar-card">
+            <div class="radar-top">
+              <div class="radar-logo">AXP</div>
+              <div class="radar-psp-name">Axepta BNP</div>
+              <div class="radar-status status-ok">STABLE</div>
+            </div>
+            <div class="radar-note">Pas de signal négatif. Migration VoP (Verification of Payee) en cours de déploiement côté BNP — vérifier compatibilité mandats SEPA.</div>
+          </div>
+          <div class="radar-card">
+            <div class="radar-top">
+              <div class="radar-logo">PBX</div>
+              <div class="radar-psp-name">Paybox / Verifone</div>
+              <div class="radar-status status-ok">STABLE</div>
+            </div>
+            <div class="radar-note">Pas d'incident signalé. Migration API v4 → v5 toujours prévue oct. 2026. Documentation disponible sur le portail développeurs.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Stripe atteint 1 900 milliards $ de volume en 2025 — rumeurs d'acquisition de PayPal</div>
+            <div class="article-source">businessofpayments.substack.com · mars 2026</div>
+          </div>
+          <div class="article-summary">Stripe affiche une croissance de 34% de son volume traité en 2025 et est désormais valorisé à 159 milliards $, soit quatre fois la capitalisation de PayPal. Bloomberg rapporte des discussions exploratoires sur une éventuelle acquisition de PayPal, ce qui représenterait un ajout de 1 700 milliards $ de volume et 400 millions de portefeuilles.</div>
+          <div class="article-tags">
+            <span class="tag tag-psp">Stripe</span>
+            <span class="tag tag-marche">Consolidation marché</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Analyse Ediis Pay</div>
+            <div class="insight-text">Un rapprochement Stripe/PayPal reconfigurerait significativement le marché européen des PSPs. À surveiller pour les renégociations tarifaires. Les clients Obs, Télérama, Malesherbes et Edition DUPUIS SPIROU, actuellement sur Stripe, seraient directement concernés.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Worldline cède ses actifs non stratégiques — stabilité du service Ogone en question</div>
+            <div class="article-source">businessofpayments.substack.com · mars 2026</div>
+          </div>
+          <div class="article-summary">Après la cession de ses opérations nord-américaines et de PaymentIQ, Worldline a vendu sa filiale indienne à BillDesk pour 60 M€. Le chiffre d'affaires Merchant Services 2025 recule de 1,4% et l'EBITDA ajusté chute de 20% à 624 M€. Le recentrage stratégique est en cours mais la trajectoire reste fragile.</div>
+          <div class="article-tags">
+            <span class="tag tag-psp">Worldline / Ogone</span>
+            <span class="tag tag-impact">⚠ Obs · Télérama · Malesherbes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R2 : RÉGLEMENTATION -->
+    <div class="rubrique r2">
+      <div class="rubrique-header">
+        <div class="rubrique-icon">⚖️</div>
+        <div class="rubrique-meta">
+          <div class="rubrique-num">Rubrique 02</div>
+          <div class="rubrique-name">Réglementation</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">DSP3 / PSR — les États membres en phase de transposition nationale en 2026</div>
+            <div class="article-source">exeisconseil.com · mars 2026</div>
+          </div>
+          <div class="article-summary">La DSP3 est entrée dans sa phase d'application en 2026 selon plusieurs cabinets spécialisés. Les États membres engagent leurs chantiers de mise en conformité. La PSR (Payment Services Regulation), directement applicable, accompagne la directive. Les PSP devront renouveler leurs licences dans les 24 mois suivant l'entrée en vigueur officielle. Application pleine attendue courant 2026-2027 selon le rythme de transposition nationale.</div>
+          <div class="article-tags">
+            <span class="tag tag-reg">DSP3</span>
+            <span class="tag tag-reg">PSR</span>
+            <span class="tag tag-impact">⚠ Impact PSP partenaires</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Analyse Ediis Pay</div>
+            <div class="insight-text">Les obligations de gouvernance, de reporting d'incidents et de continuité d'activité imposées par la PSR sont directement applicables aux PSPs partenaires. À intégrer dans les revues contractuelles 2026 avec Stripe, Worldline/Ogone, Axepta et Paybox.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">VoP (Verification of Payee) — déploiement obligatoire PSPs zone euro depuis oct. 2025</div>
+            <div class="article-source">societegenerale.com · 2026</div>
+          </div>
+          <div class="article-summary">Le service de vérification de la correspondance IBAN/nom bénéficiaire est désormais obligatoire pour les PSPs de la zone euro. La DSP3 prévoit sa généralisation à tous les types de virements fin 2026 (intra-européens). Ce mécanisme est aussi un outil de lutte contre les mandats SEPA frauduleux — sujet particulièrement sensible après FICOBA.</div>
+          <div class="article-tags">
+            <span class="tag tag-reg">VoP</span>
+            <span class="tag tag-reg">SEPA Instant</span>
+            <span class="tag tag-client">Tous clients SEPA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-bar">
+        <div class="stat-item">
+          <div class="stat-num-big">J−33</div>
+          <div class="stat-label-sm">deadline MOTO 500€ (CB)</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num-big">2026</div>
+          <div class="stat-label-sm">transposition DSP3 en cours</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num-big">24 mois</div>
+          <div class="stat-label-sm">pour renouveler licence PSP</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R3 : 3DS & FRAUDE -->
+    <div class="rubrique r3">
+      <div class="rubrique-header">
+        <div class="rubrique-icon">🔐</div>
+        <div class="rubrique-meta">
+          <div class="rubrique-num">Rubrique 03</div>
+          <div class="rubrique-name">3DS & Fraude</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Piratage FICOBA — 1,2 million de RIB compromis, risque de mandats SEPA frauduleux</div>
+            <div class="article-source">Banque de France / DGFiP · 19–20 février 2026</div>
+          </div>
+          <div class="article-summary">Le 19 février 2026, la DGFiP a confirmé une intrusion dans FICOBA, le fichier national des comptes bancaires, exposant identités, adresses et RIB de 1,2 million de contribuables. La Banque de France a communiqué le 20 février pour recommander l'activation du service "liste blanche créanciers" : seuls les créanciers préalablement désignés peuvent émettre des prélèvements sur le compte. Ce droit est encadré par le règlement SEPA n°260/2012 (article 5).</div>
+          <div class="article-tags">
+            <span class="tag tag-critical">CRITIQUE</span>
+            <span class="tag tag-alerte">Fraude SEPA</span>
+            <span class="tag tag-impact">⚠ Tous clients SEPA</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Recommandation Ediis Pay — priorité haute</div>
+            <div class="insight-text">Contacter les clients avec des volumes SEPA significatifs (Obs, Télérama, Malesherbes, Bauer, LAGARDERE, CMI, Rustica) pour vérifier leur exposition et les accompagner sur l'activation des listes blanches créanciers. À intégrer au process Chargé Opérations dès cette semaine.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">DGCCRF révèle une fraude de 7 M€ aux faux mandats SEPA dans le secteur services</div>
+            <div class="article-source">warning-trading.com · 1er avril 2026</div>
+          </div>
+          <div class="article-summary">Une société de réparation informatique est soupçonnée d'avoir émis des faux mandats SEPA permettant de débiter mensuellement 3,99€ sur des milliers de comptes entre 2020 et 2025. Le préjudice total dépasse 7 M€. L'affaire révèle une faille structurelle : le système SEPA repose sur la déclaration unilatérale d'un mandat par le créancier, sans vérification systématique par les banques.</div>
+          <div class="article-tags">
+            <span class="tag tag-alerte">Fraude SEPA</span>
+            <span class="tag tag-alerte">Mandats frauduleux</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Recommandation Ediis Pay</div>
+            <div class="insight-text">Ce type de fraude cible les abonnements récurrents de faible montant — exactement le modèle presse. Vérifier que les paramètrages de validation de mandat SEPA côté éditeurs sont à jour. Le déploiement du VoP par les PSPs partenaires apporte une réponse partielle mais ne couvre pas les mandats initiés hors zone euro.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Observatoire CB — levée des exemptions MOTO : 500€ max le 11 mai 2026</div>
+            <div class="article-source">banque-france.fr · janvier 2026</div>
+          </div>
+          <div class="article-summary">L'Observatoire de la sécurité des moyens de paiement impose une limite de vélocité de 500€ sur les paiements MOTO (Mail Order – Telephone Order) pour les derniers secteurs encore exemptés au 11 mai 2026. Les paiements MOTO hors 3DS restent structurellement plus exposés à la fraude que les paiements 3DS. Les PSP acquéreurs devront appliquer ce plafond.</div>
+          <div class="article-tags">
+            <span class="tag tag-alerte">MOTO</span>
+            <span class="tag tag-reg">Observatoire CB</span>
+            <span class="tag tag-impact">⚠ Deadline J−33</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R4 : BENCHMARK MARCHÉ -->
+    <div class="rubrique r4">
+      <div class="rubrique-header">
+        <div class="rubrique-icon">📊</div>
+        <div class="rubrique-meta">
+          <div class="rubrique-num">Rubrique 04</div>
+          <div class="rubrique-name">Benchmark marché</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">L'open banking peine encore à s'imposer en Europe — 2026 ne sera pas l'année du pay-by-bank</div>
+            <div class="article-source">businessofpayments.substack.com · mars 2026</div>
+          </div>
+          <div class="article-summary">En janvier 2026, environ 30 millions de paiements open banking ont été réalisés au Royaume-Uni (+40% an/an), mais la croissance ralentit. Le manque de notoriété auprès des consommateurs, l'absence de soutien des banques de détail et les faibles incitations marchandes freinent le décollage. Les paiements par carte représentent encore 42% des transactions e-commerce mondiales. GoCardless (spécialiste des débits directs) est en cours d'acquisition par Mollie.</div>
+          <div class="article-tags">
+            <span class="tag tag-marche">Open banking</span>
+            <span class="tag tag-psp">GoCardless · Mollie</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Signal stratégique</div>
+            <div class="insight-text">Le rachat de GoCardless par Mollie crée un acteur SEPA/A2A de référence en Europe. Concurrent potentiel direct sur le segment abonnement presse. Le SEPA Direct Debit reste la modalité dominante pour la presse en France — avantage structurel pour Ediis Pay à maintenir.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Stablecoins : Stripe rachète Bridge, l'infrastructure blockchain-native s'invite chez les PSPs</div>
+            <div class="article-source">journaldunet.com · février 2026</div>
+          </div>
+          <div class="article-summary">Le rachat de Bridge par Stripe marque l'entrée des stablecoins dans les infrastructures de paiement traditionnelles. Worldline, Adyen et Mangopay développent des couches d'interopérabilité avec le Web3. Le message du marché est clair : les stablecoins ne sont plus un pari technologique mais un outil de production financière.</div>
+          <div class="article-tags">
+            <span class="tag tag-marche">Stablecoins</span>
+            <span class="tag tag-psp">Stripe · Adyen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R5 : INSIGHT ÉDITEUR -->
+    <div class="rubrique r5">
+      <div class="rubrique-header">
+        <div class="rubrique-icon">💡</div>
+        <div class="rubrique-meta">
+          <div class="rubrique-num">Rubrique 05</div>
+          <div class="rubrique-name">Insight éditeur</div>
+        </div>
+      </div>
+
+      <div class="article-item">
+        <div class="article-bullet"></div>
+        <div class="article-body">
+          <div class="article-top">
+            <div class="article-title">Commerce agentique : Stripe cartographie 5 niveaux d'autonomie des agents IA dans le paiement</div>
+            <div class="article-source">businessofpayments.substack.com · mars 2026</div>
+          </div>
+          <div class="article-summary">Stripe a publié un framework en 5 niveaux pour le "agentic commerce" — des paiements initiés ou validés par des agents IA sans intervention humaine. Stripe estime que le marché se situe entre les niveaux 1 et 2 actuellement. Adyen nuance : "le volume de transactions agentiques reste immateriel sur notre plateforme en 2026." Les agents IA ont influencé 20% des ventes du Black Friday 2025 (Salesforce) sans initier de transactions.</div>
+          <div class="article-tags">
+            <span class="tag tag-marche">Agentic commerce</span>
+            <span class="tag tag-psp">Stripe · Adyen</span>
+          </div>
+          <div class="insight-block">
+            <div class="insight-label">Opportunité à anticiper</div>
+            <div class="insight-text">Les éditeurs presse qui développent des offres d'abonnement via assistants IA ou chatbots pourraient être exposés à ce modèle à horizon 18-24 mois. Sujet à monitorer pour les clients ayant des stratégies digitales avancées (Obs, Télérama, Edition DUPUIS SPIROU). Peut alimenter les audits Phase 1 "Intégrateur Référent".</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div><!-- /body-wrap -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-title">Cette édition en chiffres</div>
+        <ul class="footer-list">
+          <li>13 signaux traités cette semaine</li>
+          <li>2 alertes actives (FICOBA + MOTO)</li>
+          <li>6 clients avec impact direct identifié</li>
+          <li>2 recommandations opérationnelles prioritaires</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Prochaine édition</div>
+        <ul class="footer-list">
+          <li>Vendredi 17 avril 2026</li>
+          <li>Focus : SEPA Instant — état des lieux 2026</li>
+          <li>Suivi deadline MOTO 11 mai</li>
+          <li>Revue J+90 : clients batch avril</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <div>
+        <div class="footer-logo">EdiisPay · Veille Paiement</div>
+        <div style="margin-top: 4px; color: #4A5560; font-size: 11px;">Newsletter interne — usage exclusif équipes Ediis Pay<br>Générée automatiquement · Diffusion : Manager, Chargé Opérations, Chargé Intégrations, Chargé Reporting</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 11px; color: #4A5560;">Sources archivées sur Notion<br>Workflow Make · API Claude</div>
+        <div class="unsubscribe" style="margin-top: 6px;">Se désabonner</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /email-wrap -->
+</body>
+</html>
