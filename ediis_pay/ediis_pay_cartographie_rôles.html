@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ediis Pay — Cartographie des acteurs & interactions</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-tertiary: #f1f5f9;
+      --bg-info: #eff6ff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-tertiary: #94a3b8;
+      --text-info: #1d4ed8;
+      --border: rgba(100,116,139,0.15);
+      --border-md: rgba(100,116,139,0.25);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #1e293b;
+        --bg-secondary: #0f172a;
+        --bg-tertiary: #020617;
+        --bg-info: #1e3a5f;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --text-tertiary: #475569;
+        --text-info: #93c5fd;
+        --border: rgba(148,163,184,0.12);
+        --border-md: rgba(148,163,184,0.22);
+      }
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ---- HEADER ---- */
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-info);
+      background: var(--bg-info);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* ---- CARD CONTAINER ---- */
+    .card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 2rem;
+    }
+
+    /* ---- TABS ---- */
+    .tab-nav {
+      display: flex;
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 1.5rem;
+      overflow-x: auto;
+      background: var(--bg-primary);
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover { color: var(--text-primary); }
+    .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; }
+
+    .tab-content { display: none; padding: 1.5rem; }
+    .tab-content.active { display: block; }
+
+    /* ---- ACTEURS ---- */
+    .actors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .actor-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-top: 3px solid var(--actor-color, var(--border));
+    }
+
+    .actor-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .actor-card.selected { background: var(--bg-secondary); }
+
+    .actor-icon {
+      width: 38px; height: 38px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+      background: var(--actor-bg, var(--bg-secondary));
+    }
+
+    .actor-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .actor-role { font-size: 12px; color: var(--text-secondary); line-height: 1.45; }
+
+    /* Detail panel */
+    .detail-panel {
+      background: var(--bg-secondary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      display: none;
+      margin-top: 0.5rem;
+    }
+    .detail-panel.visible { display: block; }
+
+    .detail-panel h3 {
+      font-size: 16px; font-weight: 600;
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .detail-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--actor-color); flex-shrink: 0; }
+
+    .detail-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 600px) { .detail-cols { grid-template-columns: 1fr; } }
+
+    .missions-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .missions-list li {
+      font-size: 13px; color: var(--text-secondary);
+      padding-left: 18px; position: relative; line-height: 1.45;
+    }
+    .missions-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--actor-color); font-size: 12px;
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-tertiary); margin-bottom: 10px;
+    }
+
+    .tags-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tag {
+      font-size: 12px; padding: 4px 11px;
+      border-radius: 20px;
+      border: 0.5px solid var(--border-md);
+      color: var(--text-secondary);
+      background: var(--bg-primary);
+    }
+
+    .role-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .role-badge {
+      display: inline-block; font-size: 12px; font-weight: 500;
+      padding: 4px 11px; border-radius: 20px;
+    }
+
+    /* ---- CHANTIERS ---- */
+    .chantiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+    }
+
+    .chantier-card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .chantier-header {
+      padding: 1rem 1.25rem 0.85rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+      background: var(--chantier-bg);
+    }
+
+    .chantier-icon {
+      font-size: 20px; width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.55); border-radius: 9px; flex-shrink: 0;
+    }
+
+    .chantier-title { font-size: 14px; font-weight: 600; }
+    .chantier-sub { font-size: 12px; color: var(--text-secondary); }
+    .chantier-body { padding: 1.1rem 1.25rem; }
+
+    .phase-label {
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: var(--text-tertiary);
+      margin: 12px 0 7px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .phase-label::before {
+      content: '';
+      display: block; height: 1px; width: 16px;
+      background: var(--border-md);
+    }
+    .phase-label:first-child { margin-top: 0; }
+
+    .steps-list { display: flex; flex-direction: column; }
+
+    .step-item {
+      display: flex; gap: 10px;
+      padding: 7px 0; position: relative;
+    }
+    .step-item:not(:last-child)::after {
+      content: '';
+      position: absolute; left: 11px; top: 27px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+
+    .step-num {
+      width: 23px; height: 23px; border-radius: 50%;
+      border: 1.5px solid var(--border-md);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 600;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      background: var(--bg-primary);
+      position: relative; z-index: 1;
+    }
+    .step-num.conseil { border-color: #d97706; color: #d97706; }
+    .step-num.amont   { border-color: #0d9488; color: #0d9488; }
+
+    .step-actor-badge {
+      font-size: 10px; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px;
+      margin-right: 4px; display: inline-block; vertical-align: middle;
+    }
+
+    .step-text {
+      font-size: 12px; color: var(--text-secondary);
+      line-height: 1.55; padding-top: 2px;
+    }
+
+    .step-note {
+      font-size: 11px; color: var(--text-tertiary);
+      font-style: italic; margin-top: 3px;
+    }
+
+    /* ---- MATRICE ---- */
+    .matrix-legend {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1rem;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .legend-dot { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+
+    .matrix-wrap { overflow-x: auto; }
+
+    .matrix-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px; min-width: 680px;
+    }
+
+    .matrix-table th {
+      padding: 10px 12px; text-align: left;
+      font-weight: 600; font-size: 12px;
+      color: var(--text-secondary);
+      border-bottom: 0.5px solid var(--border);
+      background: var(--bg-secondary);
+      white-space: nowrap;
+    }
+
+    .matrix-table td {
+      padding: 10px 12px;
+      border-bottom: 0.5px solid var(--border);
+      vertical-align: top;
+      color: var(--text-secondary);
+    }
+
+    .matrix-table tr:hover td { background: var(--bg-secondary); }
+    .matrix-table td:first-child { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+
+    .cell-badge {
+      display: inline-block; font-size: 11px;
+      padding: 3px 9px; border-radius: 10px;
+      margin: 2px 2px 2px 0; font-weight: 500;
+    }
+
+    .badge-pilote  { background: #dbeafe; color: #1e40af; }
+    .badge-conseil { background: #fef3c7; color: #92400e; }
+    .badge-co      { background: #dcfce7; color: #166534; }
+    .badge-valide  { background: #ede9fe; color: #5b21b6; }
+    .badge-info    { background: #f1f5f9; color: #475569; }
+    .badge-amont   { background: #ccfbf1; color: #115e59; }
+
+    @media (prefers-color-scheme: dark) {
+      .badge-pilote  { background: #1e3a5f; color: #93c5fd; }
+      .badge-conseil { background: #451a03; color: #fcd34d; }
+      .badge-co      { background: #14532d; color: #86efac; }
+      .badge-valide  { background: #2e1065; color: #c4b5fd; }
+      .badge-info    { background: #1e293b; color: #94a3b8; }
+      .badge-amont   { background: #042f2e; color: #5eead4; }
+    }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-badge">Ediis Pay</div>
+    <h1>Cartographie des acteurs & interactions</h1>
+    <p>Rôles, responsabilités et flux par type de chantier</p>
+  </div>
+
+  <div class="card">
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="showTab('acteurs',this)">Acteurs</button>
+      <button class="tab-btn" onclick="showTab('chantiers',this)">Chantiers</button>
+      <button class="tab-btn" onclick="showTab('matrice',this)">Matrice RACI</button>
+    </div>
+
+    <div id="tab-acteurs" class="tab-content active">
+      <div class="actors-grid" id="actors-grid"></div>
+      <div class="detail-panel" id="actor-detail"></div>
+    </div>
+
+    <div id="tab-chantiers" class="tab-content">
+      <div class="chantiers-grid" id="chantiers-grid"></div>
+    </div>
+
+    <div id="tab-matrice" class="tab-content">
+      <div class="matrix-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div>Pilote / Gestion de projet</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#0d9488"></div>En amont (toujours)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#d97706"></div>Conseil</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Contributeur</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Valideur</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#64748b"></div>Informé</div>
+      </div>
+      <div class="matrix-wrap">
+        <table class="matrix-table" id="matrix-table"></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Document Ediis Pay — Usage interne</div>
+</div>
+
+<script>
+const ACTORS = [
+  {
+    id: 'ep',
+    name: 'Équipe Ediis Pay',
+    icon: '💳',
+    color: '#2563eb',
+    bg: '#dbeafe',
+    role: 'Pilotage produit, conseil & gestion de projet transverse',
+    roles_types: [
+      { label: 'Pilote', color: '#dbeafe', tc: '#1e40af' },
+      { label: 'Conseil', color: '#fef3c7', tc: '#92400e' },
+      { label: 'Coordination transverse', color: '#e0e7ff', tc: '#3730a3' },
+    ],
+    missions: [
+      'Piloter le déploiement du module de paiement (gestion de projet transverse)',
+      'Apporter un rôle de conseil aux équipes internes et aux clients',
+      'Coordonner tous les acteurs sur chaque chantier',
+      'Gérer la relation et les contrats avec les PSP',
+      'Définir les spécifications fonctionnelles et arbitrer les choix techniques',
+      'Assurer le suivi des incidents, évolutions et risques projet',
+    ],
+    interacts: ['Chargés de compte', 'MOA / Production', 'Exploitation', 'Paramétrage', 'Contrôle', 'PSP', 'Clients'],
+  },
+  {
+    id: 'ca',
+    name: 'Chargés de compte',
+    icon: '🤝',
+    color: '#0d9488',
+    bg: '#ccfbf1',
+    role: 'Interface commerciale — toujours en amont des chantiers',
+    roles_types: [
+      { label: 'Toujours en amont', color: '#ccfbf1', tc: '#115e59' },
+    ],
+    missions: [
+      'Qualifier le besoin client avant tout démarrage de chantier',
+      'Initier et cadrer la demande en lien avec l\'équipe Ediis Pay',
+      'Porter les demandes clients vers les équipes internes',
+      'Informer et accompagner le client tout au long du chantier',
+      'Gérer la relation commerciale et contractuelle',
+    ],
+    interacts: ['Ediis Pay', 'MOA / Production', 'Clients éditeurs', 'Clients caritatifs'],
+  },
+  {
+    id: 'moa',
+    name: 'MOA / Production',
+    icon: '⚙️',
+    color: '#7c3aed',
+    bg: '#ede9fe',
+    role: 'Mise en place technique des ERP Ediis (Magellan, Loggia, Alizé)',
+    roles_types: [
+      { label: 'Contributeur technique', color: '#ede9fe', tc: '#5b21b6' },
+    ],
+    missions: [
+      'Intégrer le module Ediis Pay dans l\'ERP client (Magellan, Loggia ou Alizé)',
+      'Paramétrer les connecteurs de paiement au niveau ERP',
+      'Réaliser les recettes techniques d\'intégration',
+      'Gérer les migrations de PSP au niveau ERP',
+      'Documenter les configurations techniques par ERP',
+    ],
+    interacts: ['Ediis Pay', 'Paramétrage', 'Contrôle', 'Exploitation'],
+  },
+  {
+    id: 'expl',
+    name: 'Exploitation',
+    icon: '🔄',
+    color: '#d97706',
+    bg: '#fef3c7',
+    role: 'Gestion des flux de production',
+    roles_types: [
+      { label: 'Contributeur', color: '#dcfce7', tc: '#166534' },
+    ],
+    missions: [
+      'Surveiller les flux de paiement en production',
+      'Traiter les incidents et anomalies de flux',
+      'Assurer la continuité de service',
+      'Orchestrer les bascules et fenêtres de maintenance',
+      'Reporter les métriques de production',
+    ],
+    interacts: ['MOA / Production', 'Ediis Pay', 'Contrôle'],
+  },
+  {
+    id: 'param',
+    name: 'Paramétrage',
+    icon: '🛠️',
+    color: '#dc2626',
+    bg: '#fee2e2',
+    role: 'Configuration fonctionnelle dans les ERP (Magellan, Loggia, Alizé)',
+    roles_types: [
+      { label: 'Contributeur', color: '#dcfce7', tc: '#166534' },
+    ],
+    missions: [
+      'Paramétrer les règles métier Ediis Pay dans l\'ERP client',
+      'Configurer les offres et moyens de paiement dans Magellan, Loggia ou Alizé',
+      'Mettre en place les référentiels (PSP, contrats) au niveau ERP',
+      'Gérer les évolutions de paramétrage en lien avec MOA',
+      'Réaliser les tests fonctionnels de configuration dans l\'ERP',
+    ],
+    interacts: ['MOA / Production', 'Ediis Pay', 'Contrôle'],
+  },
+  {
+    id: 'ctrl',
+    name: 'Contrôle',
+    icon: '🔍',
+    color: '#0f766e',
+    bg: '#ccfbf1',
+    role: 'Vérification, conformité et réconciliation financière',
+    roles_types: [
+      { label: 'Valideur', color: '#ede9fe', tc: '#5b21b6' },
+    ],
+    missions: [
+      'Valider la conformité des configurations avant mise en production',
+      'Effectuer les contrôles réglementaires (PCI-DSS, etc.)',
+      'Auditer et réconcilier les flux financiers',
+      'Contrôler les lettres de change et les soldes',
+      'Émettre les rapports de conformité post-chantier',
+    ],
+    interacts: ['MOA / Production', 'Paramétrage', 'Exploitation', 'Ediis Pay'],
+  },
+];
+
+const CHANTIERS = [
+  {
+    id: 'psp',
+    title: "Mise en place d'un PSP",
+    sub: "Intégration d'un nouveau prestataire de paiement",
+    icon: '🏦',
+    bg: 'rgba(37,99,235,0.07)',
+    phases: [
+      { label: 'En amont', steps: [
+        { actor: 'ca', text: "Identification du besoin avec le client et transmission à l'équipe Ediis Pay", type: 'amont' },
+      ]},
+      { label: 'Cadrage & conseil', steps: [
+        { actor: 'ep', text: "Analyse du besoin, conseil sur le choix du PSP, négociation du contrat", type: 'conseil' },
+      ]},
+      { label: 'Exécution', steps: [
+        { actor: 'ep', text: "Pilotage du chantier : coordination des équipes et suivi avancement" },
+        { actor: 'param', text: "Configuration du PSP dans l'ERP concerné (Magellan, Loggia ou Alizé)", note: "Paramétrage réalisé directement dans l'ERP" },
+        { actor: 'moa', text: "Intégration du connecteur PSP et recette technique dans l'ERP" },
+        { actor: 'ctrl', text: "Validation de conformité (PCI-DSS, sécurité des flux)" },
+        { actor: 'expl', text: "Mise en production et surveillance des premiers flux" },
+      ]},
+      { label: 'Clôture', steps: [
+        { actor: 'ep', text: "Bilan et communication aux chargés de compte et clients" },
+      ]},
+    ],
+  },
+  {
+    id: 'new-client',
+    title: "Arrivée d'un nouveau client",
+    sub: "Éditeur ou caritatif",
+    icon: '🆕',
+    bg: 'rgba(13,148,136,0.07)',
+    phases: [
+      { label: 'En amont', steps: [
+        { actor: 'ca', text: "Qualification du besoin, signature du contrat commercial", type: 'amont' },
+      ]},
+      { label: 'Cadrage & conseil', steps: [
+        { actor: 'ep', text: "Conseil sur le choix du PSP, des offres de paiement et de l'ERP cible", type: 'conseil' },
+      ]},
+      { label: 'Exécution', steps: [
+        { actor: 'ep', text: "Pilotage transverse du chantier d'intégration" },
+        { actor: 'moa', text: "Déploiement de l'ERP Ediis (Magellan, Loggia ou Alizé) pour le client" },
+        { actor: 'param', text: "Paramétrage des offres, contrats et règles métier dans l'ERP", note: "Paramétrage réalisé dans Magellan, Loggia ou Alizé selon l'ERP du client" },
+        { actor: 'ctrl', text: "Contrôle et validation de la configuration avant ouverture" },
+        { actor: 'expl', text: "Ouverture en production et monitoring des premiers paiements" },
+      ]},
+      { label: 'Clôture', steps: [
+        { actor: 'ca', text: "Accompagnement du client en phase de démarrage" },
+      ]},
+    ],
+  },
+  {
+    id: 'change-psp',
+    title: "Changement de PSP",
+    sub: "Migration vers un nouveau prestataire",
+    icon: '🔃',
+    bg: 'rgba(124,58,237,0.07)',
+    phases: [
+      { label: 'En amont', steps: [
+        { actor: 'ca', text: "Information du client, recueil des contraintes et calendrier", type: 'amont' },
+      ]},
+      { label: 'Cadrage & conseil', steps: [
+        { actor: 'ep', text: "Conseil sur la stratégie de migration, arbitrage risques/délais", type: 'conseil' },
+      ]},
+      { label: 'Exécution', steps: [
+        { actor: 'ep', text: "Pilotage du plan de migration et coordination des équipes" },
+        { actor: 'param', text: "Configuration du nouveau PSP dans l'ERP, maintien de l'ancien pendant la transition", note: "Paramétrage dans Magellan, Loggia ou Alizé" },
+        { actor: 'moa', text: "Mise à jour des connecteurs ERP et recette technique de bascule" },
+        { actor: 'expl', text: "Orchestration du basculement en production (fenêtre de maintenance)" },
+        { actor: 'ctrl', text: "Contrôle de la réconciliation financière pré/post bascule" },
+      ]},
+      { label: 'Clôture', steps: [
+        { actor: 'ep', text: "Clôture du contrat avec l'ancien PSP, retour d'expérience" },
+        { actor: 'ca', text: "Confirmation au client de la fin de migration" },
+      ]},
+    ],
+  },
+  {
+    id: 'depart',
+    title: "Départ d'un éditeur",
+    sub: "Offboarding client",
+    icon: '📤',
+    bg: 'rgba(220,38,38,0.07)',
+    phases: [
+      { label: 'En amont', steps: [
+        { actor: 'ca', text: "Gestion du préavis contractuel et notification formelle", type: 'amont' },
+      ]},
+      { label: 'Cadrage & conseil', steps: [
+        { actor: 'ep', text: "Conseil sur le plan d'offboarding et les risques associés", type: 'conseil' },
+      ]},
+      { label: 'Exécution', steps: [
+        { actor: 'ep', text: "Pilotage de l'offboarding : arrêt des flux, clôture des contrats PSP" },
+        { actor: 'expl', text: "Arrêt progressif des flux de paiement en production" },
+        { actor: 'ctrl', text: "Réconciliation finale des flux et validation des soldes" },
+        { actor: 'moa', text: "Désactivation des configurations ERP et archivage" },
+        { actor: 'param', text: "Archivage ou suppression des paramètres dans l'ERP (Magellan, Loggia ou Alizé)", note: "Archivage réalisé dans l'ERP du client" },
+      ]},
+      { label: 'Clôture', steps: [
+        { actor: 'ca', text: "Clôture administrative et restitution des données si demandée" },
+      ]},
+    ],
+  },
+];
+
+const MATRIX = {
+  cols: ['Ediis Pay', 'Chargés de compte', 'MOA / Prod.', 'Exploitation', 'Paramétrage', 'Contrôle'],
+  rows: [
+    { chantier: '🏦 Nouveau PSP', cells: [
+      [{ l:'Pilote', c:'pilote' }, { l:'Conseil', c:'conseil' }],
+      [{ l:'En amont', c:'amont' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur ERP', c:'co' }],
+      [{ l:'Valideur', c:'valide' }],
+    ]},
+    { chantier: '🆕 Nouveau client', cells: [
+      [{ l:'Pilote', c:'pilote' }, { l:'Conseil', c:'conseil' }],
+      [{ l:'En amont', c:'amont' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur ERP', c:'co' }],
+      [{ l:'Valideur', c:'valide' }],
+    ]},
+    { chantier: '🔃 Changement PSP', cells: [
+      [{ l:'Pilote', c:'pilote' }, { l:'Conseil', c:'conseil' }],
+      [{ l:'En amont', c:'amont' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Pilote bascule', c:'pilote' }],
+      [{ l:'Contributeur ERP', c:'co' }],
+      [{ l:'Valideur', c:'valide' }],
+    ]},
+    { chantier: '📤 Départ éditeur', cells: [
+      [{ l:'Pilote', c:'pilote' }, { l:'Conseil', c:'conseil' }],
+      [{ l:'En amont', c:'amont' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur', c:'co' }],
+      [{ l:'Contributeur ERP', c:'co' }],
+      [{ l:'Valideur', c:'valide' }],
+    ]},
+  ],
+};
+
+let selectedActor = null;
+
+function actorById(id) { return ACTORS.find(a => a.id === id); }
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function selectActor(id) {
+  const a = actorById(id);
+  const panel = document.getElementById('actor-detail');
+  if (selectedActor === id) {
+    selectedActor = null;
+    panel.classList.remove('visible');
+    document.querySelectorAll('.actor-card').forEach(c => c.classList.remove('selected'));
+    return;
+  }
+  selectedActor = id;
+  document.querySelectorAll('.actor-card').forEach(c => c.classList.toggle('selected', c.dataset.id === id));
+  panel.style.setProperty('--actor-color', a.color);
+
+  const rolesBadges = a.roles_types.map(r =>
+    `<span class="role-badge" style="background:${r.color};color:${r.tc}">${r.label}</span>`
+  ).join('');
+
+  panel.innerHTML = `
+    <h3><span class="detail-dot"></span>${a.name}</h3>
+    <div class="role-badges">${rolesBadges}</div>
+    <div class="detail-cols">
+      <div>
+        <div class="section-label">Missions</div>
+        <ul class="missions-list">${a.missions.map(m => `<li>${m}</li>`).join('')}</ul>
+      </div>
+      <div>
+        <div class="section-label">Interactions avec</div>
+        <div class="tags-row">${a.interacts.map(i => `<span class="tag">${i}</span>`).join('')}</div>
+      </div>
+    </div>
+  `;
+  panel.classList.add('visible');
+}
+
+function renderActors() {
+  document.getElementById('actors-grid').innerHTML = ACTORS.map(a => `
+    <div class="actor-card" data-id="${a.id}" style="--actor-color:${a.color};--actor-bg:${a.bg}" onclick="selectActor('${a.id}')">
+      <div class="actor-icon">${a.icon}</div>
+      <div class="actor-name">${a.name}</div>
+      <div class="actor-role">${a.role}</div>
+    </div>
+  `).join('');
+}
+
+function renderChantiers() {
+  document.getElementById('chantiers-grid').innerHTML = CHANTIERS.map(c => {
+    let stepNum = 0;
+    const phasesHtml = c.phases.map(p => {
+      const stepsHtml = p.steps.map(s => {
+        stepNum++;
+        const actor = actorById(s.actor);
+        const numClass = s.type === 'conseil' ? 'conseil' : s.type === 'amont' ? 'amont' : '';
+        return `<div class="step-item">
+          <div class="step-num ${numClass}">${stepNum}</div>
+          <div class="step-text">
+            <span class="step-actor-badge" style="background:${actor.bg};color:${actor.color}">${actor.name.replace('Équipe ', '')}</span>
+            ${s.text}
+            ${s.note ? `<div class="step-note">${s.note}</div>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="phase-label">${p.label}</div><div class="steps-list">${stepsHtml}</div>`;
+    }).join('');
+    return `
+      <div class="chantier-card">
+        <div class="chantier-header" style="--chantier-bg:${c.bg}; background:${c.bg}">
+          <div class="chantier-icon">${c.icon}</div>
+          <div>
+            <div class="chantier-title">${c.title}</div>
+            <div class="chantier-sub">${c.sub}</div>
+          </div>
+        </div>
+        <div class="chantier-body">${phasesHtml}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderMatrix() {
+  const bm = { pilote:'badge-pilote', conseil:'badge-conseil', co:'badge-co', valide:'badge-valide', info:'badge-info', amont:'badge-amont' };
+  let html = `<thead><tr><th>Chantier</th>${MATRIX.cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+  MATRIX.rows.forEach(r => {
+    html += `<tr><td>${r.chantier}</td>${r.cells.map(cell =>
+      `<td>${cell.map(b => `<span class="cell-badge ${bm[b.c]}">${b.l}</span>`).join('')}</td>`
+    ).join('')}</tr>`;
+  });
+  html += '</tbody>';
+  document.getElementById('matrix-table').innerHTML = html;
+}
+
+renderActors();
+renderChantiers();
+renderMatrix();
+</script>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ediis Pay — Partenaire Intégrateur Référent PSP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F8F9FC;color:#1e293b;min-height:100vh}
+
+.page{max-width:1100px;margin:0 auto;padding:24px 20px 40px}
+
+.top-bar{background:#0F1F3D;border-radius:12px;padding:18px 24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.top-logo{display:flex;align-items:center;gap:12px}
+.top-icon{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#185FA5,#534AB7);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.top-title{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}
+.top-sub{font-size:11px;color:#A8C4E8;margin-top:2px}
+.top-badge{font-size:10px;padding:4px 12px;border-radius:20px;background:rgba(83,74,183,.35);color:#c5c0f8;font-weight:500;border:1px solid rgba(83,74,183,.4);white-space:nowrap}
+
+.strategy-banner{border:1px solid #e2e8f0;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#fff}
+.banner-card{padding:11px 14px;border-radius:8px;border:1px solid #e2e8f0}
+.banner-title{font-size:12px;font-weight:600;color:#1e293b;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.banner-badge{font-size:9px;padding:2px 7px;border-radius:6px;font-weight:600}
+.banner-desc{font-size:11px;color:#64748b;line-height:1.45}
+
+.timeline{display:flex;align-items:flex-start;gap:0;margin-bottom:18px;overflow-x:auto;padding-bottom:4px}
+.tl-step{display:flex;flex-direction:column;align-items:center;flex:1;min-width:88px;cursor:pointer;position:relative;padding:0 2px}
+.tl-step:not(:last-child)::after{content:'';position:absolute;top:18px;left:60%;width:80%;height:2px;background:#cbd5e1;z-index:0}
+.tl-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;border:2px solid;transition:all .2s;z-index:1;position:relative}
+.tl-label{font-size:10px;font-weight:500;margin-top:6px;text-align:center;line-height:1.3;color:#64748b;max-width:82px;transition:color .15s}
+.tl-dur{font-size:9px;color:#94a3b8;margin-top:2px;text-align:center}
+.tl-badge{font-size:8px;padding:1px 6px;border-radius:5px;font-weight:600;margin-top:3px}
+
+.detail-area{border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;margin-bottom:14px;background:#fff}
+.detail-header{padding:12px 18px;border-bottom:1px solid #e2e8f0}
+.dh-top{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.detail-title{font-size:15px;font-weight:600;color:#1e293b}
+.dpill{font-size:9px;padding:2px 8px;border-radius:6px;font-weight:600}
+.detail-sub{font-size:12px;color:#64748b;margin-top:2px}
+.dtags{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.dtag{font-size:10px;padding:2px 9px;border-radius:20px;border:1px solid #e2e8f0;color:#64748b;background:#f8fafc}
+
+.model-note{padding:10px 16px;border-bottom:1px solid #e2e8f0;display:flex;gap:9px;align-items:flex-start;background:#f8fafc}
+.mn-label{font-size:9px;font-weight:600;padding:3px 8px;border-radius:5px;flex-shrink:0;margin-top:1px}
+.mn-text{font-size:11px;color:#475569;line-height:1.45}
+
+.zone-label{padding:8px 16px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:7px;background:#fafbfc}
+.zpill{font-size:9px;padding:2px 8px;border-radius:8px;font-weight:600}
+
+.actors-grid{display:grid}
+.actor-col{padding:11px 13px;border-right:1px solid #e2e8f0}
+.actor-col:last-child{border-right:none}
+.actor-head{display:flex;align-items:center;gap:7px;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid #e2e8f0}
+.actor-av{width:25px;height:25px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.actor-name{font-size:11px;font-weight:600;color:#1e293b;line-height:1.2}
+.actor-type{font-size:9px;color:#94a3b8;margin-top:1px}
+.rpill{font-size:9px;padding:2px 6px;border-radius:6px;font-weight:600;margin-left:auto;flex-shrink:0}
+.tasks{display:flex;flex-direction:column;gap:5px}
+.ti{font-size:11px;color:#475569;display:flex;gap:6px;align-items:flex-start;line-height:1.35}
+.ti-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.ti.conseil{border-left:2px solid #534AB7;padding-left:6px;margin-left:-1px}
+.ti.apport{border-left:2px solid #993556;padding-left:6px;margin-left:-1px}
+
+.int-section{padding:10px 16px;background:#f8fafc;border-top:1px solid #e2e8f0}
+.int-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:#94a3b8;margin-bottom:6px}
+.int-item{font-size:11px;color:#475569;display:flex;gap:7px;align-items:flex-start;line-height:1.35;margin-bottom:4px}
+
+.tv-box{border:1px solid #e2e8f0;border-radius:12px;padding:14px 18px;background:#fff;margin-bottom:12px}
+.tv-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8;margin-bottom:9px}
+.tv-item{font-size:11px;color:#475569;display:flex;gap:8px;align-items:flex-start;line-height:1.4;margin-bottom:5px}
+.tv-tag{font-size:9px;padding:2px 6px;border-radius:5px;font-weight:600;flex-shrink:0;margin-top:1px}
+
+.leg-bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:12px 0 0}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:#64748b}
+.lp{font-size:9px;padding:2px 8px;border-radius:6px;font-weight:600}
+.lsep{width:1px;height:14px;background:#e2e8f0;margin:0 3px}
+.lbar-conseil{width:14px;height:3px;border-radius:1px;background:#534AB7;display:inline-block}
+.lbar-apport{width:14px;height:3px;border-radius:1px;background:#993556;display:inline-block}
+
+.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.value-card{border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;background:#fff}
+.value-card-title{font-size:11px;font-weight:600;color:#1e293b;margin-bottom:5px}
+.value-card-desc{font-size:11px;color:#64748b;line-height:1.4}
+
+@media(max-width:700px){
+  .strategy-banner{grid-template-columns:1fr}
+  .value-grid{grid-template-columns:1fr}
+  .actors-grid{grid-template-columns:1fr!important}
+  .actor-col{border-right:none;border-bottom:1px solid #e2e8f0}
+  .actor-col:last-child{border-bottom:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top-bar">
+  <div class="top-logo">
+    <div class="top-icon">E</div>
+    <div>
+      <div class="top-title">Ediis Pay — Partenaire Intégrateur Référent PSP</div>
+      <div class="top-sub">Processus complet — Mise en place d'un nouveau PSP CB/carte</div>
+    </div>
+  </div>
+  <div class="top-badge">Modèle : Intégrateur Référent</div>
+</div>
+
+<div class="value-grid">
+  <div class="value-card" style="border-top:3px solid #185FA5">
+    <div class="value-card-title">Pour Ediis Pay</div>
+    <div class="value-card-desc">Commission intégrateur référent, fidélisation éditeurs, différenciation par la valeur conseil, industrialisation via gabarits réutilisables</div>
+  </div>
+  <div class="value-card" style="border-top:3px solid #0F6E56">
+    <div class="value-card-title">Pour l'éditeur</div>
+    <div class="value-card-desc">Conditions PSP inaccessibles en direct, recommandation experte, intégration clé en main, accompagnement post-lancement et optimisation continue</div>
+  </div>
+  <div class="value-card" style="border-top:3px solid #993556">
+    <div class="value-card-title">Pour le PSP</div>
+    <div class="value-card-desc">Accès qualifié au portefeuille éditeurs, réduction du coût d'acquisition, intégrations pré-certifiées, recommandation active vers les éditeurs</div>
+  </div>
+</div>
+
+<div class="timeline" id="timeline"></div>
+<div class="detail-area" id="detail"></div>
+
+<div class="tv-box">
+  <div class="tv-title">Transversalité — Modèle Intégrateur Référent</div>
+  <div class="tv-item"><span class="tv-tag" style="background:#EEEDFE;color:#3C3489">Manager</span><span>Seul porteur de la relation partenariale PSP en amont — négocie, signe, et anime les revues trimestrielles. Interface contractuelle unique vis-à-vis du PSP.</span></div>
+  <div class="tv-item"><span class="tv-tag" style="background:#E1F5EE;color:#085041">OPS</span><span>Pilote l'audit éditeur et la grille de recommandation PSP — cœur de la démarche conseil. Assure le suivi post-déploiement J+30 et J+90.</span></div>
+  <div class="tv-item"><span class="tv-tag" style="background:#FAEEDA;color:#633806">REP</span><span>Produit les benchmarks PSP et simulation financière pour la recommandation, puis suit les KPI de performance et les données de commission post-déploiement.</span></div>
+  <div class="tv-item"><span class="tv-tag" style="background:#E6F1FB;color:#0C447C">INT</span><span>Maintient les fiches techniques et gabarits des PSP partenaires — socle qui rend la recommandation crédible et l'intégration accélérée (1–4 sem. vs 2–6 sem.).</span></div>
+  <div class="tv-item"><span class="tv-tag" style="background:#EAF3DE;color:#27500A">MOE/PAR</span><span>Les gabarits PSP partenaires sont réutilisés à chaque nouvel éditeur — levier d'industrialisation qui réduit les délais et standardise les déploiements.</span></div>
+</div>
+
+<div class="leg-bar">
+  <div class="li"><span class="lp" style="background:#EEEDFE;color:#3C3489">R</span>Responsable</div>
+  <div class="li"><span class="lp" style="background:#E1F5EE;color:#085041">A</span>Autorité</div>
+  <div class="li"><span class="lp" style="background:#FAEEDA;color:#633806">C</span>Consulté</div>
+  <div class="li"><span class="lp" style="background:#F1EFE8;color:#444441">I</span>Informé</div>
+  <div class="lsep"></div>
+  <div class="li"><span class="lp" style="background:#E6F1FB;color:#0C447C">Ediis Pay</span></div>
+  <div class="li"><span class="lp" style="background:#EAF3DE;color:#27500A">Interne Ediis</span></div>
+  <div class="li"><span class="lp" style="background:#FBEAF0;color:#72243E">Externe</span></div>
+  <div class="lsep"></div>
+  <div class="li"><span class="lbar-conseil"></span>Tâche conseil / stratégique</div>
+  <div class="li"><span class="lbar-apport"></span>Spécifique modèle intégrateur référent</div>
+</div>
+
+</div>
+
+<script>
+const RC={R:{bg:'#EEEDFE',c:'#3C3489'},A:{bg:'#E1F5EE',c:'#085041'},C:{bg:'#FAEEDA',c:'#633806'},I:{bg:'#F1EFE8',c:'#444441'}};
+const ACTORS=[
+  {id:'mgr', name:'Manager',        type:'Ediis Pay',    short:'MGR',color:'#534AB7',bg:'#EEEDFE',tc:'#3C3489',zone:'int'},
+  {id:'ops', name:'Opérations',     type:'Ediis Pay',    short:'OPS',color:'#0F6E56',bg:'#E1F5EE',tc:'#085041',zone:'int'},
+  {id:'rep', name:'Reporting',      type:'Ediis Pay',    short:'REP',color:'#854F0B',bg:'#FAEEDA',tc:'#633806',zone:'int'},
+  {id:'tech',name:'Intégrations',   type:'Ediis Pay',    short:'INT',color:'#185FA5',bg:'#E6F1FB',tc:'#0C447C',zone:'int'},
+  {id:'moe', name:'MOE',            type:'Interne Ediis',short:'MOE',color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',zone:'interne'},
+  {id:'par', name:'Paramétrage',    type:'Interne Ediis',short:'PAR',color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',zone:'interne'},
+  {id:'exp', name:'Exploitation',   type:'Interne Ediis',short:'EXP',color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',zone:'interne'},
+  {id:'ctrl',name:'Contrôles',      type:'Interne Ediis',short:'CTL',color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',zone:'interne'},
+  {id:'psp', name:'PSP Partenaire', type:'Externe',      short:'PSP',color:'#993556',bg:'#FBEAF0',tc:'#72243E',zone:'ext'},
+  {id:'edit',name:'Éditeur',        type:'Externe',      short:'EDT',color:'#993556',bg:'#FBEAF0',tc:'#72243E',zone:'ext'},
+];
+
+const PHASES=[
+{
+  label:'★ Partenariat PSP',dur:'Continu',color:'#534AB7',bg:'#EEEDFE',tc:'#3C3489',isNew:true,
+  desc:'Constituer et entretenir le catalogue de PSP partenaires — socle de toute la démarche conseil',
+  tags:['Stratégie amont','Intégrateur référent','Catalogue PSP','Continu'],
+  modelNote:'Ediis Pay noue des accords intégrateur référent avec chaque PSP : conditions tarifaires groupées, SLA garantis, engagement de volume. Le Manager est le seul porteur de cette relation. Chaque accord génère des gabarits techniques réutilisables qui accélèrent tous les déploiements éditeurs suivants.',
+  actors:{
+    mgr:{raci:'A',tasks:[
+      {t:'Identifier et qualifier les PSP à intégrer au catalogue partenaires (CB, SEPA, multi-devises…)',c:'conseil'},
+      {t:'Négocier seul le statut intégrateur référent : conditions tarifaires groupées, SLA garantis, commission',c:'apport'},
+      {t:'Signer les accords de partenariat et définir les objectifs de volume annuel',c:'apport'},
+      {t:'Animer les revues partenariales trimestrielles avec chaque PSP référencé',c:'none'},
+    ]},
+    ops:{raci:'C',tasks:[
+      {t:'Partager le profil du portefeuille éditeurs pour orienter les négociations tarifaires',c:'conseil'},
+      {t:'Valider la cohérence des conditions partenariales avec les pratiques de facturation existantes (SAGE 638)',c:'none'},
+    ]},
+    rep:{raci:'R',tasks:[
+      {t:'Mettre en place le suivi des volumes et commissions par PSP partenaire',c:'apport'},
+      {t:'Produire le tableau de bord partenarial pour les revues trimestrielles Manager/PSP',c:'apport'},
+      {t:'Alimenter le benchmark PSP partenaires pour la recommandation conseil éditeur',c:'conseil'},
+    ]},
+    tech:{raci:'R',tasks:[
+      {t:'Qualifier techniquement chaque PSP partenaire (APIs, 3DS2, certifications, capacités)',c:'conseil'},
+      {t:'Constituer et maintenir les fiches techniques et gabarits d\'intégration réutilisables par PSP',c:'conseil'},
+      {t:'Documenter les différenciants techniques de chaque PSP pour alimenter la recommandation',c:'conseil'},
+    ]},
+    moe:{raci:'C',tasks:[
+      {t:'Valider la faisabilité d\'intégration de chaque PSP partenaire dans le SI existant',c:'none'},
+      {t:'Contribuer à la constitution des gabarits MOE réutilisables par PSP partenaire',c:'none'},
+    ]},
+    par:{raci:'I',tasks:[{t:'Être informé des PSP référencés pour anticiper les gabarits de paramétrage standardisés',c:'none'}]},
+    exp:{raci:'I',tasks:[{t:'Préparer les procédures de supervision standard par PSP partenaire',c:'none'}]},
+    ctrl:{raci:'C',tasks:[{t:'Valider que les accords partenariaux permettent l\'auditabilité et le contrôle des commissions',c:'apport'}]},
+    psp:{raci:'R',tasks:[
+      {t:'Négocier et formaliser les conditions partenariales intégrateur référent avec le Manager',c:'apport'},
+      {t:'Livrer la documentation technique et les gabarits d\'intégration',c:'none'},
+      {t:'S\'engager sur les délais d\'onboarding et les SLA pour les éditeurs apportés',c:'none'},
+    ]},
+    edit:{raci:'I',tasks:[{t:'Non impliqué — bénéficiaire indirect des conditions négociées par Ediis Pay',c:'none'}]},
+  },
+  interactions:[
+    {f:'Manager',t:'PSP Partenaire',d:'Négociation seul du statut intégrateur référent et des conditions préférentielles groupées'},
+    {f:'Chargé Intégrations',t:'PSP Partenaire',d:'Qualification technique et constitution des fiches partenaires + gabarits'},
+    {f:'MOE',t:'Chargé Intégrations',d:'Validation faisabilité et contribution aux gabarits d\'intégration réutilisables'},
+    {f:'Chargé Reporting',t:'Manager',d:'Tableau de bord partenarial pour les revues trimestrielles'},
+  ]
+},
+{
+  label:'1. Audit & conseil éditeur',dur:'1–2 sem.',color:'#993556',bg:'#FBEAF0',tc:'#72243E',isNew:true,
+  desc:'Diagnostiquer le besoin paiement CB de l\'éditeur et produire une recommandation PSP argumentée',
+  tags:['Diagnostic paiement','Recommandation PSP','Approche conseil','Nouvelle phase'],
+  modelNote:'Cœur de la valeur ajoutée stratégique : Ediis Pay initie le dialogue, ne répond plus seulement à une demande. L\'éditeur bénéficie d\'un audit fonctionnel, d\'un benchmark PSP comparatif et d\'une simulation financière — tout cela inclus dans la relation intégrateur référent.',
+  actors:{
+    mgr:{raci:'A',tasks:[
+      {t:'Initier la démarche conseil : présenter le catalogue PSP partenaires et les avantages intégrateur référent',c:'conseil'},
+      {t:'Conduire le cadrage stratégique avec l\'éditeur (ambitions, marchés, volumes, saisonnalité)',c:'conseil'},
+      {t:'Valider et présenter la recommandation PSP finale à l\'éditeur avec argumentaire économique',c:'conseil'},
+    ]},
+    ops:{raci:'R',tasks:[
+      {t:'Conduire l\'audit fonctionnel : types de transaction CB, récurrence, devise, remboursements, chargebacks',c:'conseil'},
+      {t:'Construire la grille de comparaison des PSP partenaires selon les critères de l\'éditeur',c:'conseil'},
+      {t:'Identifier les contraintes opérationnelles spécifiques (SI éditeur, volumétrie, pics)',c:'conseil'},
+    ]},
+    rep:{raci:'R',tasks:[
+      {t:'Produire le benchmark comparatif des PSP partenaires (taux autorisation, délais règlement, coût total)',c:'conseil'},
+      {t:'Réaliser la simulation financière comparative par PSP partenaire pour le profil de l\'éditeur',c:'conseil'},
+    ]},
+    tech:{raci:'C',tasks:[
+      {t:'Fournir l\'analyse technique comparative depuis les fiches partenaires (compatibilité SI, délais d\'intégration, 3DS2)',c:'conseil'},
+      {t:'Identifier d\'éventuels bloquants techniques spécifiques à l\'éditeur',c:'none'},
+    ]},
+    moe:{raci:'I',tasks:[{t:'Être informé du PSP pressenti pour anticiper les travaux MOE à venir',c:'none'}]},
+    par:{raci:'I',tasks:[{t:'Être informé du PSP pressenti pour anticiper les besoins de paramétrage',c:'none'}]},
+    exp:{raci:'I',tasks:[{t:'Prendre connaissance pour préparer les procédures de supervision correspondantes',c:'none'}]},
+    ctrl:{raci:'I',tasks:[{t:'Prendre connaissance du PSP retenu pour préparer le plan de contrôle adapté',c:'none'}]},
+    psp:{raci:'I',tasks:[{t:'Mettre à disposition les éléments pour la recommandation (tarifs négociés, cas clients, certifications)',c:'none'}]},
+    edit:{raci:'C',tasks:[
+      {t:'Participer à l\'entretien de diagnostic : exprimer besoins, contraintes et ambitions paiement CB',c:'conseil'},
+      {t:'Valider la recommandation PSP et donner accord pour l\'engagement du projet',c:'conseil'},
+    ]},
+  },
+  interactions:[
+    {f:'Manager',t:'Éditeur',d:'Cadrage stratégique et présentation de la recommandation PSP argumentée'},
+    {f:'Chargé Opérations',t:'Éditeur',d:'Audit fonctionnel détaillé du besoin paiement CB'},
+    {f:'Chargé Reporting',t:'Manager',d:'Benchmark PSP et simulation financière pour étayer la recommandation'},
+    {f:'Chargé Intégrations',t:'Chargé Opérations',d:'Analyse technique comparative des PSP partenaires'},
+    {f:'Manager',t:'PSP Partenaire',d:'Notification du lead éditeur — activation du pipeline intégrateur référent'},
+  ]
+},
+{
+  label:'2. Contractualisation',dur:'1–2 sem.',color:'#0F6E56',bg:'#E1F5EE',tc:'#085041',isNew:false,
+  desc:'Formaliser les conditions éditeur — accéléré par le partenariat PSP préexistant',
+  tags:['Contrat PSP','Conditions groupées','DSP2 / 3DS2'],
+  modelNote:'Modèle intégrateur référent : Ediis Pay est l\'interface contractuelle unique — il signe avec le PSP et sous-contractualise avec l\'éditeur les conditions groupées négociées en amont. L\'éditeur bénéficie de tarifs inaccessibles en direct sans avoir à négocier lui-même.',
+  actors:{
+    mgr:{raci:'A',tasks:[
+      {t:'Signer le contrat PSP en tant qu\'intégrateur référent et sous-contractualiser avec l\'éditeur les conditions groupées',c:'apport'},
+      {t:'Valider la conformité DSP2/RGPD et les SLA contractuels',c:'none'},
+      {t:'Être l\'interface contractuelle unique : l\'éditeur ne contractualise pas directement avec le PSP',c:'apport'},
+    ]},
+    ops:{raci:'C',tasks:[
+      {t:'Vérifier la cohérence des tarifs avec les grilles de facturation éditeur (SAGE 638)',c:'none'},
+      {t:'Valider les conditions de remboursement et de gestion des chargebacks',c:'none'},
+    ]},
+    rep:{raci:'C',tasks:[{t:'Vérifier que les données contractuelles permettront un reporting complet (volumes, commissions, SLA)',c:'none'}]},
+    tech:{raci:'R',tasks:[
+      {t:'Activer les accès éditeur depuis le partenariat PSP (credentials spécifiques, sandbox dédiée)',c:'none'},
+      {t:'Adapter les gabarits d\'intégration partenaires au profil technique de l\'éditeur',c:'conseil'},
+    ]},
+    moe:{raci:'C',tasks:[{t:'Valider la compatibilité des conditions techniques du contrat avec les gabarits MOE existants',c:'none'}]},
+    par:{raci:'I',tasks:[{t:'Prendre connaissance des paramètres contractuels qui guideront le paramétrage',c:'none'}]},
+    exp:{raci:'I',tasks:[{t:'Prendre connaissance des SLA pour calibrer les seuils de surveillance',c:'none'}]},
+    ctrl:{raci:'C',tasks:[{t:'Valider les clauses de traçabilité, d\'audit et de contrôle des commissions dans le contrat',c:'apport'}]},
+    psp:{raci:'R',tasks:[
+      {t:'Valider les conditions sous-contractuelles proposées par Ediis Pay à l\'éditeur',c:'apport'},
+      {t:'Livrer les accès et la documentation spécifique à l\'éditeur',c:'none'},
+    ]},
+    edit:{raci:'C',tasks:[
+      {t:'Signer avec Ediis Pay les conditions groupées PSP (pas de contractualisation directe avec le PSP)',c:'apport'},
+    ]},
+  },
+  interactions:[
+    {f:'Manager',t:'PSP Partenaire',d:'Activation des conditions groupées pour l\'éditeur — déclaration intégrateur référent'},
+    {f:'Manager',t:'Éditeur',d:'Signature des conditions groupées PSP — Ediis Pay interface contractuelle unique'},
+    {f:'Chargé Intégrations',t:'PSP Partenaire',d:'Obtention des accès éditeur et adaptation des gabarits techniques'},
+  ]
+},
+{
+  label:'3. Intégration technique',dur:'1–4 sem.',color:'#185FA5',bg:'#E6F1FB',tc:'#0C447C',isNew:false,
+  desc:'Déployer les connecteurs CB — accéléré par les gabarits PSP partenaires préexistants',
+  tags:['MOE','API CB','3DS2','Gabarits partenaires'],
+  modelNote:'L\'intégration est significativement accélérée : les gabarits techniques des PSP partenaires sont réutilisés, réduisant le délai de 2–6 sem. à 1–4 sem. Le Chargé Intégrations adapte le gabarit au lieu de développer from scratch. MOE et Paramétrage s\'appuient sur les modèles standardisés.',
+  actors:{
+    mgr:{raci:'I',tasks:[{t:'Suivre l\'avancement via les points hebdomadaires et escalader si blocage PSP impactant le planning',c:'none'}]},
+    ops:{raci:'C',tasks:[
+      {t:'Valider les flux CB spécifiques à l\'éditeur (formats, fréquences, règles de réconciliation)',c:'none'},
+      {t:'Créer les configurations CB de test dans les outils internes (SAGE 638, tarifs, modes de facturation)',c:'none'},
+    ]},
+    rep:{raci:'C',tasks:[{t:'Valider que les données CB tracées correspondent aux indicateurs définis en phase conseil',c:'conseil'}]},
+    tech:{raci:'R',tasks:[
+      {t:'Adapter le gabarit d\'intégration PSP partenaire au profil technique de l\'éditeur',c:'conseil'},
+      {t:'Développer et déployer les connecteurs CB (paiement, remboursement, webhooks, 3DS2 : frictionless, challenge, exemptions SCA)',c:'none'},
+      {t:'Réaliser les tests unitaires et d\'intégration en sandbox PSP dédiée',c:'none'},
+    ]},
+    moe:{raci:'R',tasks:[
+      {t:'Piloter la MOE en s\'appuyant sur le gabarit partenaire pour accélérer l\'intégration',c:'conseil'},
+      {t:'Valider la conformité architecturale de l\'adaptation du gabarit',c:'none'},
+    ]},
+    par:{raci:'R',tasks:[
+      {t:'Appliquer le gabarit de paramétrage PSP partenaire adapté au profil de l\'éditeur',c:'conseil'},
+      {t:'Préparer les configurations de production (SAGE 638, règles de routage CB, seuils 3DS2)',c:'none'},
+    ]},
+    exp:{raci:'C',tasks:[{t:'Valider la supervisabilité des flux et préparer les runbooks à partir du modèle PSP partenaire',c:'none'}]},
+    ctrl:{raci:'C',tasks:[{t:'Vérifier l\'intégration des points de contrôle dans les flux CB (rapprochement, montants)',c:'none'}]},
+    psp:{raci:'C',tasks:[{t:'Support technique sandbox : résolution des erreurs API, fourniture des données de test 3DS2',c:'none'}]},
+    edit:{raci:'I',tasks:[{t:'Préparer les accès techniques de son côté (URLs de callback, clés publiques, prérequis SI)',c:'none'}]},
+  },
+  interactions:[
+    {f:'MOE',t:'Chargé Intégrations',d:'Pilotage MOE sur la base des gabarits PSP partenaires — conformité architecturale'},
+    {f:'Paramétrage',t:'MOE',d:'Application et adaptation du gabarit de paramétrage standard PSP'},
+    {f:'Chargé Intégrations',t:'PSP Partenaire',d:'Tests sandbox et ajustements techniques spécifiques éditeur'},
+    {f:'Exploitation',t:'Paramétrage',d:'Validation des configurations de supervision'},
+  ]
+},
+{
+  label:'4. Recette & homologation',dur:'1–2 sem.',color:'#854F0B',bg:'#FAEEDA',tc:'#633806',isNew:false,
+  desc:'Recette fonctionnelle end-to-end, certification PSP accélérée, go/no-go production',
+  tags:['Recette CB','Certification PSP','Qualité','Go/no-go'],
+  modelNote:'La certification est pilotée par Ediis Pay au nom de l\'éditeur : en tant qu\'intégrateur référent, Ediis Pay coordonne l\'homologation avec le PSP et l\'éditeur ne participe qu\'à la validation fonctionnelle depuis son interface. Process de certification accéléré grâce au statut référent.',
+  actors:{
+    mgr:{raci:'A',tasks:[
+      {t:'Arbitrer le go/no-go vers la production',c:'none'},
+      {t:'Notifier le PSP de l\'éditeur intégré — activation formelle des conditions groupées et déclenchement commission',c:'apport'},
+      {t:'Communiquer à l\'éditeur la date de mise en production',c:'none'},
+    ]},
+    ops:{raci:'R',tasks:[
+      {t:'Exécuter les scénarios fonctionnels CB : paiement accepté/refusé, remboursement, chargeback, 3DS2 (frictionless, challenge, exemption)',c:'none'},
+      {t:'Qualifier et documenter les anomalies, valider la cohérence de facturation (montants, codes SAGE)',c:'none'},
+    ]},
+    rep:{raci:'C',tasks:[{t:'Contrôler la qualité et la complétude des données de recette pour les futurs dashboards CB',c:'conseil'}]},
+    tech:{raci:'R',tasks:[
+      {t:'Recette technique et tests de charge',c:'none'},
+      {t:'Piloter la certification PSP au nom de l\'éditeur (process accéléré via statut intégrateur référent)',c:'apport'},
+      {t:'Corriger les anomalies techniques et préparer le dossier de mise en production',c:'none'},
+    ]},
+    moe:{raci:'R',tasks:[{t:'Superviser la recette MOE, valider la conformité aux specs et arbitrer les anomalies techniques',c:'none'}]},
+    par:{raci:'R',tasks:[{t:'Paramétrage de pré-production et validation des configurations finales avant go/no-go',c:'none'}]},
+    exp:{raci:'C',tasks:[{t:'Valider les scénarios de supervision et finaliser les runbooks de production',c:'none'}]},
+    ctrl:{raci:'R',tasks:[{t:'Contrôles de recette : rapprochement montants, conformité comptable, traçabilité pour audit',c:'none'}]},
+    psp:{raci:'R',tasks:[
+      {t:'Homologation et certification CB — process accéléré par le statut intégrateur référent d\'Ediis Pay',c:'apport'},
+      {t:'Validation des flux de production avec Ediis Pay avant go-live',c:'none'},
+    ]},
+    edit:{raci:'C',tasks:[{t:'Tests côté éditeur et validation fonctionnelle du parcours CB depuis son interface',c:'none'}]},
+  },
+  interactions:[
+    {f:'Chargé Opérations',t:'Éditeur',d:'Co-exécution des scénarios de recette fonctionnelle CB'},
+    {f:'Chargé Intégrations',t:'PSP Partenaire',d:'Certification au nom de l\'éditeur — accélérée via le statut intégrateur référent'},
+    {f:'MOE',t:'Chargé Intégrations',d:'Supervision et arbitrage technique de la recette'},
+    {f:'Contrôles',t:'Chargé Reporting',d:'Validation croisée des données de recette (montants, statuts)'},
+    {f:'Manager',t:'PSP Partenaire',d:'Notification formelle — déclenchement des conditions groupées et commission'},
+  ]
+},
+{
+  label:'5. Production & optimisation',dur:'Continu',color:'#3B6D11',bg:'#EAF3DE',tc:'#27500A',isNew:false,
+  desc:'Go-live, monitoring J+1 à J+30, suivi post-déploiement et optimisation continue',
+  tags:['Go-live','Monitoring CB','Optimisation J+90','Revue partenariale'],
+  modelNote:'Le suivi post-production est un levier conseil continu : la revue J+90 permet à Ediis Pay de proposer des optimisations (exemptions 3DS2, taux de conversion CB) ou un PSP complémentaire. Le Manager valorise les volumes dans la revue partenariale trimestrielle PSP (commission intégrateur référent).',
+  actors:{
+    mgr:{raci:'A',tasks:[
+      {t:'Valider le go-live et superviser la stabilisation J+1 à J+30',c:'none'},
+      {t:'Valoriser les volumes intégrés dans la revue partenariale trimestrielle PSP — suivi des commissions intégrateur référent',c:'apport'},
+      {t:'Proposer à l\'éditeur une revue de performance à J+90 : optimisation des paramètres CB ou recommandation d\'un PSP complémentaire',c:'conseil'},
+    ]},
+    ops:{raci:'R',tasks:[
+      {t:'Mettre à jour les fiches clients (SAGE 638, tarifs CB, modes de facturation)',c:'none'},
+      {t:'Former les équipes éditeur et assurer le support N1 sur les premiers flux CB',c:'none'},
+      {t:'Conduire le suivi post-déploiement J+30 : recueil des retours éditeur, identification des points de friction',c:'conseil'},
+      {t:'Piloter la revue J+90 côté fonctionnel : analyse des rejets, chargebacks, remboursements',c:'conseil'},
+    ]},
+    rep:{raci:'R',tasks:[
+      {t:'Activer les dashboards CB (taux autorisation, rejets par code erreur, volumes, délais règlement)',c:'none'},
+      {t:'Produire les rapports J+7 et J+30 — inclure la synthèse commission intégrateur référent',c:'apport'},
+      {t:'Alimenter le tableau de bord partenarial PSP avec les données de l\'éditeur',c:'apport'},
+      {t:'Préparer les données d\'optimisation pour la revue J+90 (taux exemption 3DS2, taux de conversion CB)',c:'conseil'},
+    ]},
+    tech:{raci:'C',tasks:[
+      {t:'Support technique post-lancement : incidents API, webhooks manquants, timeouts',c:'none'},
+      {t:'Mettre à jour les gabarits partenaires avec les enseignements de ce déploiement',c:'conseil'},
+    ]},
+    moe:{raci:'C',tasks:[{t:'Superviser la stabilité de l\'intégration et coordonner les correctifs si incidents bloquants',c:'none'}]},
+    par:{raci:'R',tasks:[{t:'Activation des configurations de production et ajustements de paramétrage post-lancement si nécessaire',c:'none'}]},
+    exp:{raci:'R',tasks:[
+      {t:'Surveillance opérationnelle dès J+1 : disponibilité API CB, latence, flux',c:'none'},
+      {t:'Gestion des alertes et escalade au Chargé Intégrations si incident technique',c:'none'},
+    ]},
+    ctrl:{raci:'R',tasks:[
+      {t:'Contrôles J+1 : rapprochement montants CB, statuts, conformité comptable',c:'none'},
+      {t:'Valider les données de commission intégrateur référent déclarées au PSP',c:'apport'},
+    ]},
+    psp:{raci:'C',tasks:[
+      {t:'Support PSP post go-live et fourniture des rapports de transactions pour réconciliation',c:'none'},
+      {t:'Versement des commissions intégrateur référent selon les conditions partenariales',c:'apport'},
+    ]},
+    edit:{raci:'I',tasks:[
+      {t:'Utiliser le nouveau moyen de paiement CB et remonter les incidents opérationnels',c:'none'},
+      {t:'Participer à la revue de performance J+90 proposée par Ediis Pay',c:'conseil'},
+    ]},
+  },
+  interactions:[
+    {f:'Exploitation',t:'Chargé Intégrations',d:'Escalade des alertes techniques post go-live'},
+    {f:'Contrôles',t:'Chargé Reporting',d:'Données de contrôle J+1 pour dashboards et suivi commission intégrateur référent'},
+    {f:'PSP Partenaire',t:'Manager',d:'Versement commission intégrateur référent — validation volumes'},
+    {f:'Chargé Opérations',t:'Éditeur',d:'Suivi post-déploiement J+30 et animation revue fonctionnelle J+90'},
+    {f:'Manager',t:'Éditeur',d:'Proposition J+90 : optimisation PSP ou recommandation d\'un PSP complémentaire'},
+    {f:'Chargé Intégrations',t:'MOE',d:'Mise à jour des gabarits partenaires avec les enseignements du déploiement'},
+  ]
+}
+];
+
+let current=0;
+
+function pill(v){return `<span class="rpill" style="background:${RC[v].bg};color:${RC[v].c}">${v}</span>`}
+
+function buildTL(){
+  document.getElementById('timeline').innerHTML=PHASES.map((p,i)=>`
+    <div class="tl-step" onclick="sel(${i})" title="${p.label}">
+      <div class="tl-circle" style="background:${i===current?p.color:p.bg};border-color:${p.color};color:${i===current?'#fff':p.tc}">${i===0?'★':i}</div>
+      <div class="tl-label" style="color:${i===current?p.color:''};font-weight:${i===current?600:400}">${p.label.replace(/^\★\s/,'★ ')}</div>
+      <div class="tl-dur">${p.dur}</div>
+      ${p.isNew?`<span class="tl-badge" style="background:#EEEDFE;color:#3C3489">nouveau</span>`:''}
+    </div>`).join('');
+}
+
+function taskHtml(t,color){
+  const cls=t.c==='conseil'?'ti conseil':t.c==='apport'?'ti apport':'ti';
+  return `<div class="${cls}"><span class="ti-dot" style="background:${color}"></span><span>${t.t}</span></div>`;
+}
+
+function colHtml(a,p){
+  const ad=p.actors[a.id];
+  return `<div class="actor-col">
+    <div class="actor-head">
+      <div class="actor-av" style="background:${a.bg};color:${a.tc}">${a.short}</div>
+      <div><div class="actor-name">${a.name}</div><div class="actor-type">${a.type}</div></div>
+      ${pill(ad.raci)}
+    </div>
+    <div class="tasks">${ad.tasks.map(t=>taskHtml(t,a.color)).join('')}</div>
+  </div>`;
+}
+
+function buildDetail(){
+  const p=PHASES[current];
+  const intA=ACTORS.filter(a=>a.zone==='int');
+  const intE=ACTORS.filter(a=>a.zone==='interne');
+  const extA=ACTORS.filter(a=>a.zone==='ext');
+  const intHtml=p.interactions.map(it=>`
+    <div class="int-item"><span style="color:#534AB7;font-size:13px;flex-shrink:0">↔</span>
+    <span><strong>${it.f}</strong> → <strong>${it.t}</strong> : ${it.d}</span></div>`).join('');
+
+  document.getElementById('detail').innerHTML=`
+    <div class="detail-header" style="border-top:3px solid ${p.color}">
+      <div class="dh-top">
+        <div class="detail-title">${p.label}</div>
+        ${p.isNew?`<span class="dpill" style="background:#EEEDFE;color:#3C3489">Nouvelle phase</span>`:''}
+        <span class="dpill" style="background:#E6F1FB;color:#0C447C">Intégrateur Référent</span>
+      </div>
+      <div class="detail-sub">${p.desc}</div>
+      <div class="dtags">${['⏱ '+p.dur,...p.tags].map(t=>`<span class="dtag">${t}</span>`).join('')}</div>
+    </div>
+    <div class="model-note">
+      <span class="mn-label" style="background:#E6F1FB;color:#0C447C">Intégrateur Référent</span>
+      <span class="mn-text">${p.modelNote}</span>
+    </div>
+    <div class="zone-label"><span class="zpill" style="background:#E6F1FB;color:#0C447C">Ediis Pay</span>Équipe Ediis Pay</div>
+    <div class="actors-grid" style="grid-template-columns:repeat(4,1fr)">${intA.map(a=>colHtml(a,p)).join('')}</div>
+    <div class="zone-label"><span class="zpill" style="background:#EAF3DE;color:#27500A">Interne</span>Services internes Ediis (MOE, Paramétrage, Exploitation, Contrôles)</div>
+    <div class="actors-grid" style="grid-template-columns:repeat(4,1fr)">${intE.map(a=>colHtml(a,p)).join('')}</div>
+    <div class="zone-label"><span class="zpill" style="background:#FBEAF0;color:#72243E">Externe</span>Acteurs externes</div>
+    <div class="actors-grid" style="grid-template-columns:repeat(2,1fr)">${extA.map(a=>colHtml(a,p)).join('')}</div>
+    <div class="int-section">
+      <div class="int-title">Interactions clés de cette phase</div>
+      ${intHtml}
+    </div>`;
+}
+
+function sel(i){current=i;buildTL();buildDetail();}
+buildTL();buildDetail();
+</script>
+</body>
+</html>
