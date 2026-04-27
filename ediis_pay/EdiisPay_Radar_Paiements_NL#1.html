@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Radar Paiements #01 · Avril 2026 · Ediis Pay</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', Arial, sans-serif;
+  background: #F0EDE8;
+  color: #1A1814;
+  -webkit-font-smoothing: antialiased;
+}
+.email-wrap {
+  max-width: 660px;
+  margin: 32px auto;
+  background: #FAFAF8;
+  border: 1px solid #DDD8D0;
+}
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: #0F1923;
+  padding: 28px 40px 22px;
+  border-bottom: 4px solid #C8A96E;
+}
+.mast-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.logo-group { display: flex; align-items: center; gap: 10px; }
+.logo-mark {
+  width: 34px; height: 34px; border-radius: 7px;
+  background: linear-gradient(135deg, #C8A96E, #E0C48C);
+  display: flex; align-items: center; justify-content: center;
+  font-family: Georgia, serif; font-size: 16px; font-weight: 900;
+  color: #0F1923; flex-shrink: 0;
+}
+.logo-name { font-size: 15px; font-weight: 700; color: #F5F0E8; letter-spacing: -0.3px; }
+.logo-sub  { font-size: 10px; color: #8A8070; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 1px; }
+.edition-badge {
+  font-family: 'DM Mono', Courier, monospace;
+  font-size: 10px; color: #8A8070;
+  border: 1px solid #2E3A44;
+  padding: 4px 10px; border-radius: 3px;
+}
+.mast-title {
+  font-family: Georgia, serif;
+  font-size: 30px; font-weight: 900;
+  color: #F5F0E8; line-height: 1.1;
+  letter-spacing: -0.5px; margin-bottom: 8px;
+}
+.mast-title span { color: #C8A96E; }
+.mast-meta {
+  font-size: 12px; color: #8A8070;
+  display: flex; align-items: center; gap: 12px;
+}
+.mast-meta::before {
+  content: '';
+  display: inline-block; width: 20px; height: 1px;
+  background: #C8A96E; vertical-align: middle;
+}
+
+/* ── BANDEAU BIENVENUE (1er envoi) ── */
+.welcome-band {
+  background: linear-gradient(135deg, #0070C0 0%, #1A3A5C 100%);
+  padding: 18px 40px;
+  border-bottom: 1px solid #005599;
+}
+.welcome-band p {
+  font-size: 13px; color: #E0EEFA; line-height: 1.6;
+}
+.welcome-band strong { color: #FFFFFF; font-weight: 600; }
+
+/* ── SOMMAIRE COMPACT ── */
+.sommaire {
+  background: #0F1923;
+  padding: 0 40px;
+  border-bottom: 1px solid #1E2D38;
+}
+.som-row {
+  display: flex; border-top: 1px solid #1E2D38;
+}
+.som-item {
+  flex: 1; padding: 10px 0 9px;
+  text-align: center;
+  border-right: 1px solid #1E2D38;
+}
+.som-item:last-child { border-right: none; }
+.som-num {
+  font-family: 'DM Mono', Courier, monospace;
+  font-size: 8px; color: #C8A96E;
+  letter-spacing: .12em; text-transform: uppercase;
+  display: block; margin-bottom: 3px;
+}
+.som-label { font-size: 11px; font-weight: 500; color: #8A8070; line-height: 1.3; }
+
+/* ── BODY ── */
+.body-wrap { padding: 30px 40px; }
+
+
+/* ── SÉPARATEUR ── */
+.sep { border: none; border-top: 1px solid #E8E0D0; margin: 22px 0; }
+
+/* ── SECTION HEADER ── */
+.section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.section-icon {
+  width: 32px; height: 32px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.section-num {
+  font-family: 'DM Mono', Courier, monospace;
+  font-size: 9px; color: #8A8070;
+  letter-spacing: .12em; text-transform: uppercase;
+}
+.section-name {
+  font-family: Georgia, serif;
+  font-size: 16px; font-weight: 700; color: #1A1814;
+  letter-spacing: -0.3px; line-height: 1.2;
+}
+
+/* ── ARTICLE ── */
+.article {
+  display: flex; gap: 12px;
+  padding-bottom: 14px; margin-bottom: 14px;
+  border-bottom: 1px solid #F0EBE2;
+}
+.article:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+.article-bullet {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 6px;
+}
+.article-body { flex: 1; }
+.article-title {
+  font-size: 14px; font-weight: 600; color: #1A1814;
+  line-height: 1.3; margin-bottom: 4px;
+}
+.article-source {
+  font-family: 'DM Mono', Courier, monospace;
+  font-size: 10px; color: #8A8070; margin-bottom: 5px;
+}
+.article-summary {
+  font-size: 13px; color: #4A4540;
+  line-height: 1.6; margin-bottom: 7px;
+}
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.tag {
+  font-size: 10px; font-weight: 500;
+  padding: 2px 8px; border-radius: 3px;
+}
+.t-psp    { background: #EEEDFE; color: #534AB7; }
+.t-reg    { background: #E6F1FB; color: #185FA5; }
+.t-fraude { background: #FAECE7; color: #993C1D; }
+.t-market { background: #FAEEDA; color: #854F0B; }
+.t-press  { background: #EAF3DE; color: #3B6D11; }
+.t-alert  { background: #FFF0F0; color: #A32D2D; font-weight: 700; border: 1px solid #F7C1C1; }
+.t-ediis  { background: #0070C0; color: #FFFFFF; }
+
+.insight {
+  background: #F5F0E8;
+  border-left: 3px solid #0F1923;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+}
+.insight-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: #8A8070; margin-bottom: 3px;
+}
+.insight-text { font-size: 12px; color: #2A2520; line-height: 1.5; }
+
+/* ── RADAR PSP ── */
+.psp-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin-bottom: 14px;
+}
+.psp-card {
+  background: #F5F0E8; border: 1px solid #DDD8D0;
+  border-radius: 7px; padding: 11px 13px;
+}
+.psp-top { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+.psp-logo {
+  width: 26px; height: 26px; border-radius: 5px;
+  background: #0F1923; font-family: 'DM Mono', Courier, monospace;
+  font-size: 9px; font-weight: 700; color: #C8A96E;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.psp-name { font-size: 12px; font-weight: 600; color: #1A1814; flex: 1; }
+.psp-status {
+  font-size: 9px; font-family: 'DM Mono', Courier, monospace;
+  letter-spacing: .06em; padding: 2px 6px; border-radius: 3px;
+}
+.s-ok    { background: #EAF3DE; color: #3B6D11; }
+.s-watch { background: #FAEEDA; color: #854F0B; }
+.s-alert { background: #FAECE7; color: #993C1D; }
+.psp-note { font-size: 11px; color: #4A4540; line-height: 1.4; }
+
+/* ── STAT BAR ── */
+.stat-bar {
+  background: #0F1923; border-radius: 7px;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 14px;
+}
+.stat-item { text-align: center; padding: 14px 8px; }
+.stat-item + .stat-item { border-left: 1px solid #1E2D38; }
+.stat-val {
+  font-family: Georgia, serif;
+  font-size: 22px; font-weight: 900; color: #C8A96E;
+  display: block; line-height: 1;
+}
+.stat-lbl { font-size: 10px; color: #8A8070; display: block; margin-top: 4px; }
+
+/* ── ALERTE BANDES ── */
+.alert-red {
+  background: #FFF0F0; border-left: 4px solid #C0392B;
+  padding: 12px 40px; border-bottom: 1px solid #F5C0C0;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.alert-orange {
+  background: #FFF3E0; border-left: 4px solid #E65C00;
+  padding: 12px 40px; border-bottom: 1px solid #F5D5C0;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.alert-icon {
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; flex-shrink: 0; margin-top: 1px;
+}
+.alert-text { flex: 1; }
+.alert-label {
+  font-size: 9px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.alert-content { font-size: 12px; line-height: 1.5; }
+
+/* ── ENCART FEEDBACK ── */
+.feedback-wrap {
+  background: linear-gradient(135deg, #1A1A2E 0%, #0F1923 100%);
+  border-radius: 8px;
+  padding: 22px 24px;
+  margin-top: 6px;
+  border: 1px solid #C8A96E;
+}
+.feedback-title {
+  font-family: Georgia, serif;
+  font-size: 16px; font-weight: 700; color: #C8A96E;
+  margin-bottom: 8px;
+}
+.feedback-text {
+  font-size: 13px; color: #B0A898; line-height: 1.6;
+  margin-bottom: 16px;
+}
+.feedback-questions { margin-bottom: 16px; }
+.fq-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid #1E2D38;
+}
+.fq-item:last-child { border-bottom: none; }
+.fq-num {
+  font-family: 'DM Mono', Courier, monospace;
+  font-size: 10px; color: #C8A96E; flex-shrink: 0;
+  margin-top: 1px; min-width: 20px;
+}
+.fq-text { font-size: 13px; color: #D0C8BC; line-height: 1.4; }
+.feedback-cta {
+  display: block; text-align: center;
+  background: #C8A96E; color: #0F1923;
+  font-size: 13px; font-weight: 700;
+  padding: 11px 24px; border-radius: 6px;
+  text-decoration: none; letter-spacing: 0.02em;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: #0F1923;
+  padding: 22px 40px;
+  border-top: 4px solid #C8A96E;
+}
+.footer-grid { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 14px; }
+.footer-col-title {
+  font-size: 9px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #C8A96E; margin-bottom: 6px;
+}
+.footer-list { list-style: none; }
+.footer-list li {
+  font-size: 11px; color: #8A8070; padding: 2px 0;
+}
+.footer-list li::before { content: '— '; color: #2E3A44; }
+.footer-legal {
+  border-top: 1px solid #1E2D38;
+  padding-top: 12px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.footer-brand { font-family: 'DM Mono', Courier, monospace; font-size: 11px; color: #C8A96E; }
+.footer-info { font-size: 10px; color: #3A4550; text-align: right; line-height: 1.7; }
+
+@media (max-width: 600px) {
+  .body-wrap { padding: 20px 20px; }
+  .masthead { padding: 20px 20px 16px; }
+  .progress-grid { grid-template-columns: 1fr 1fr; }
+  .psp-grid { grid-template-columns: 1fr; }
+  .stat-bar { grid-template-columns: 1fr; }
+  .footer-grid { flex-direction: column; }
+  .alert-red, .alert-orange { padding: 12px 20px; }
+  .sommaire { padding: 0 20px; }
+  .welcome-band { padding: 14px 20px; }
+}
+</style>
+</head>
+<body>
+<div class="email-wrap">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="mast-top">
+      <div class="logo-group">
+        <div class="logo-mark">E</div>
+        <div>
+          <div class="logo-name">Ediis Pay</div>
+          <div class="logo-sub">Radar Paiements</div>
+        </div>
+      </div>
+      <div class="edition-badge"># 01 · Avril 2026</div>
+    </div>
+    <div class="mast-title">Le <span>Radar</span><br>Paiements</div>
+    <div class="mast-meta">
+      Avril 2026 &nbsp;·&nbsp; Édition mensuelle &nbsp;·&nbsp; Équipes Ediis
+    </div>
+  </div>
+
+  <!-- BANDEAU BIENVENUE -->
+  <div class="welcome-band">
+    <p>
+      <strong>Bienvenue dans le Radar Paiements.</strong> Chaque mois, cette newsletter vous donne en quelques minutes un panorama des actualités paiement qui comptent pour nos métiers. C'est notre premier envoi : <strong>votre avis nous est précieux</strong>. Vous trouverez en bas de cette édition 3 questions pour nous aider à calibrer les prochaines.
+    </p>
+  </div>
+
+  <!-- SOMMAIRE -->
+  <div class="sommaire">
+    <div class="som-row">
+      <div class="som-item">
+        <span class="som-num">01</span>
+        <span class="som-label">Signal PSP</span>
+      </div>
+      <div class="som-item">
+        <span class="som-num">02</span>
+        <span class="som-label">Réglementation</span>
+      </div>
+      <div class="som-item">
+        <span class="som-num">03</span>
+        <span class="som-label">Fraude & Sécurité</span>
+      </div>
+      <div class="som-item">
+        <span class="som-num">→</span>
+        <span class="som-label">Votre avis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTES -->
+  <div class="alert-red">
+    <div class="alert-icon" style="background:#C0392B;">🚨</div>
+    <div class="alert-text">
+      <div class="alert-label" style="color:#7A0000;">Alerte sécurité · Action recommandée</div>
+      <div class="alert-content" style="color:#3A0C0C;"><strong>Piratage FICOBA (fév. 2026) — 1,2 M de RIB/IBAN compromis.</strong> Risque de mandats SEPA frauduleux sur les comptes exposés. Nos clients SEPA sont potentiellement concernés.</div>
+    </div>
+  </div>
+  <div class="alert-orange">
+    <div class="alert-icon" style="background:#E65C00;">⚡</div>
+    <div class="alert-text">
+      <div class="alert-label" style="color:#7A2E00;">Deadline réglementaire · J−33</div>
+      <div class="alert-content" style="color:#3A1E0C;"><strong>Observatoire CB — limite MOTO 500 € au 11 mai 2026.</strong> Paiements par téléphone/courrier plafonnés. Vérifier avec les équipes intégration si des clients sont concernés.</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-wrap">
+
+    <!-- SECTION 01 : SIGNAL PSP -->
+    <div class="section-head">
+      <div class="section-icon" style="background:#E1F5EE;">📡</div>
+      <div>
+        <div class="section-num">Rubrique 01</div>
+        <div class="section-name">Signal PSP</div>
+      </div>
+    </div>
+
+    <!-- Radar PSP -->
+    <div class="psp-grid">
+      <div class="psp-card">
+        <div class="psp-top">
+          <div class="psp-logo">STR</div>
+          <div class="psp-name">Stripe</div>
+          <div class="psp-status s-watch">WATCH</div>
+        </div>
+        <div class="psp-note">$1 900 Mds de volume 2025 (+34%). Rumeurs d'acquisition de PayPal. Hausse tarifaire Europe anticipée Q3 2026.</div>
+      </div>
+      <div class="psp-card">
+        <div class="psp-top">
+          <div class="psp-logo">WLN</div>
+          <div class="psp-name">Worldline / Ogone</div>
+          <div class="psp-status s-alert">ALERTE</div>
+        </div>
+        <div class="psp-note">EBITDA −20% en 2025. Cessions d'actifs en cours. Stabilité des endpoints Ogone à surveiller.</div>
+      </div>
+      <div class="psp-card">
+        <div class="psp-top">
+          <div class="psp-logo">LYR</div>
+          <div class="psp-name">Lyra Network</div>
+          <div class="psp-status s-ok">PARTENAIRE</div>
+        </div>
+        <div class="psp-note">PSP français souverain, certifié PCI DSS. Feuille de route 2026 : Tap to Pay, wallets étendus. Négociation tarifaire en cours.</div>
+      </div>
+      <div class="psp-card">
+        <div class="psp-top">
+          <div class="psp-logo">AXP</div>
+          <div class="psp-name">Axepta BNP</div>
+          <div class="psp-status s-ok">STABLE</div>
+        </div>
+        <div class="psp-note">Déploiement VoP (vérification IBAN/nom) en cours. Impact positif sur la lutte contre les mandats SEPA frauduleux.</div>
+      </div>
+    </div>
+
+    <!-- Article Stripe -->
+    <div class="article">
+      <div class="article-bullet" style="background:#1D9E75;"></div>
+      <div class="article-body">
+        <div class="article-title">GoCardless racheté par Mollie — un acteur SEPA de référence se forme en Europe</div>
+        <div class="article-source">businessofpayments.substack.com · mars 2026</div>
+        <div class="article-summary">Le rapprochement entre GoCardless (spécialiste des débits directs) et Mollie crée un concurrent direct sur le segment abonnement récurrent en Europe. Le SEPA Direct Debit représente encore 42% des paiements récurrents en presse — avantage structurel à défendre.</div>
+        <div class="tags">
+          <span class="tag t-psp">SEPA</span>
+          <span class="tag t-market">M&A</span>
+          <span class="tag t-ediis">Ediis Pay</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- SECTION 02 : RÉGLEMENTATION -->
+    <div class="section-head">
+      <div class="section-icon" style="background:#E6F1FB;">⚖️</div>
+      <div>
+        <div class="section-num">Rubrique 02</div>
+        <div class="section-name">Réglementation</div>
+      </div>
+    </div>
+
+    <div class="stat-bar">
+      <div class="stat-item">
+        <span class="stat-val">2026</span>
+        <span class="stat-lbl">Transposition DSP3 en cours</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">J−33</span>
+        <span class="stat-lbl">Deadline MOTO 500€ (11 mai)</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-val">24 mois</span>
+        <span class="stat-lbl">Pour renouveler les licences PSP</span>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-bullet" style="background:#185FA5;"></div>
+      <div class="article-body">
+        <div class="article-title">DSP3 / PSR — les obligations de conformité PSP entrent en phase active</div>
+        <div class="article-source">exeisconseil.com · mars 2026</div>
+        <div class="article-summary">Les États membres engagent leur transposition nationale. Les PSP devront renouveler leurs licences dans les 24 mois suivant l'entrée en vigueur. De nouvelles obligations de reporting d'incidents et de tests de résilience s'appliquent directement à nos partenaires PSP.</div>
+        <div class="tags">
+          <span class="tag t-reg">DSP3</span>
+          <span class="tag t-reg">PSR</span>
+        </div>
+        <div class="insight">
+          <div class="insight-label">Ce que ça change pour nous</div>
+          <div class="insight-text">Les revues contractuelles 2026 avec Stripe, Worldline/Ogone, Axepta et Lyra doivent intégrer les nouvelles exigences de continuité d'activité et de reporting. À mettre à l'agenda avec les équipes MOE et intégration.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="article" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">
+      <div class="article-bullet" style="background:#185FA5;"></div>
+      <div class="article-body">
+        <div class="article-title">VoP (Verification of Payee) — déploiement obligatoire pour tous les PSPs zone euro</div>
+        <div class="article-source">societegenerale.com · 2026</div>
+        <div class="article-summary">La vérification automatique de la correspondance IBAN/nom bénéficiaire est désormais obligatoire. Ce mécanisme réduit concrètement le risque de mandats SEPA frauduleux — sujet particulièrement sensible après l'incident FICOBA de février.</div>
+        <div class="tags">
+          <span class="tag t-reg">VoP</span>
+          <span class="tag t-reg">SEPA Instant</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- SECTION 03 : FRAUDE & SÉCURITÉ -->
+    <div class="section-head">
+      <div class="section-icon" style="background:#FAECE7;">🔐</div>
+      <div>
+        <div class="section-num">Rubrique 03</div>
+        <div class="section-name">Fraude &amp; Sécurité</div>
+      </div>
+    </div>
+
+    <div class="article">
+      <div class="article-bullet" style="background:#993C1D;"></div>
+      <div class="article-body">
+        <div class="article-title">7 millions d'euros de fraude aux faux mandats SEPA révélés par la DGCCRF</div>
+        <div class="article-source">warning-trading.com · 1er avril 2026</div>
+        <div class="article-summary">Une société a émis des faux mandats SEPA pour prélever 3,99€/mois sur des milliers de comptes pendant 5 ans. La faille exploitée : le système SEPA permet à un créancier de déclarer un mandat sans vérification bancaire systématique. Le préjudice dépasse 7 M€.</div>
+        <div class="tags">
+          <span class="tag t-fraude">Fraude SEPA</span>
+          <span class="tag t-alert">⚠ Abonnements récurrents</span>
+        </div>
+        <div class="insight">
+          <div class="insight-label">Ce que ça change pour nous</div>
+          <div class="insight-text">Ce type de fraude cible exactement le modèle abonnement presse — prélèvements récurrents de faible montant. Vérifier avec les équipes paramétrage que les contrôles de validation mandat sont activés chez nos clients SEPA.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep">
+
+    <!-- ENCART FEEDBACK -->
+    <div class="feedback-wrap">
+      <div class="feedback-title">📬 &nbsp;C'est votre premier Radar Paiements — votre avis compte</div>
+      <div class="feedback-text">
+        Ce premier envoi est aussi un test. Nous voulons construire une newsletter qui soit vraiment utile à vos équipes, pas une de plus à archiver sans lire. Trois questions pour calibrer les prochaines éditions :
+      </div>
+      <div class="feedback-questions">
+        <div class="fq-item">
+          <span class="fq-num">Q1</span>
+          <span class="fq-text">Le format et la longueur vous conviennent-ils, ou souhaiteriez-vous quelque chose de plus court / plus développé sur certains sujets ?</span>
+        </div>
+        <div class="fq-item">
+          <span class="fq-num">Q2</span>
+          <span class="fq-text">Quels sujets sont les plus utiles pour votre activité quotidienne — réglementation, PSP, fraude, benchmark marché ?</span>
+        </div>
+        <div class="fq-item">
+          <span class="fq-num">Q3</span>
+          <span class="fq-text">Y a-t-il un sujet paiement que vous aimeriez voir traité dans un prochain numéro ?</span>
+        </div>
+      </div>
+      <a href="mailto:veille@ediis.fr?subject=Feedback Radar Paiements #01" class="feedback-cta">
+        Répondre à ces 3 questions &nbsp;→
+      </a>
+    </div>
+
+  </div><!-- /body-wrap -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-col-title">Prochaine édition</div>
+        <ul class="footer-list">
+          <li>Mai 2026</li>
+          <li>Focus : SEPA Instant — état des lieux</li>
+          <li>Suivi deadline MOTO 11 mai</li>
+          <li>Avancée négociation Lyra</li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Ediis Pay en bref</div>
+        <ul class="footer-list">
+          <li>Pôle de services paiement Ediis</li>
+          <li>Modèle Intégrateur Référent</li>
+          <li>3 segments : CRM Presse, AID, GLI PSP</li>
+          <li>Contact : veille@ediis.fr</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <div>
+        <div class="footer-brand">Ediis Pay · Radar Paiements</div>
+        <div style="font-size:10px;color:#4A5560;margin-top:3px;">Newsletter mensuelle interne — Équipes Ediis</div>
+      </div>
+      <div class="footer-info">
+        Généré automatiquement · Workflow Make · IA Claude<br>
+        <a href="#" style="color:#3A4550;font-size:10px;text-decoration:underline;">Se désabonner</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /email-wrap -->
+</body>
+</html>
